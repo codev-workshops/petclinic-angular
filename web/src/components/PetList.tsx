@@ -30,9 +30,8 @@ export function PetList({
       onError?.(error instanceof Error ? error.message : String(error));
     }
   };
-  if (deleteSuccess) return null;
   return (
-    <table className="table table-striped">
+    <table hidden={deleteSuccess} className="table table-striped">
       <tbody>
         <tr>
           <td valign="top">
