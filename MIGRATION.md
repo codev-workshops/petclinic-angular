@@ -6,7 +6,8 @@
 - Wave 2: shared UI and form primitives, including validation groups, date input,
   `PetList`, and `VisitList`.
 - Wave 3: owners ‖ pets+visits ‖ vets+specialties+pettypes.
-- Wave 4: cutover.
+- Wave 4: cutover complete. Angular has been deleted; React is now the
+  application.
 
 # PetClinic Angular→React migration — invariants (authoritative)
 

@@ -1,12 +1,10 @@
 # React migration patterns
 
-`src/` is read-only migration reference until cutover. React code belongs under
-`web/`; keep the shared API client, Bootstrap 3 DOM contract, and route loaders
-as the stable seams between feature waves.
+React code belongs under `web/`; keep the shared API client, Bootstrap 3 DOM
+contract, and route loaders as the stable seams between feature waves.
 
-The complete `src/assets` tree is intentionally copied into `web/assets`, so
-React never imports from Angular's `src/` tree. The Angular `src/` directory,
-including its assets copy, disappears at cutover.
+The complete legacy asset tree is copied into `web/assets`, and React imports
+assets from that directory.
 
 The repository remains one npm project with one lockfile. Vite serves `web/` at
 `/petclinic/` on port 4200, and the data router uses basename `/petclinic`.
