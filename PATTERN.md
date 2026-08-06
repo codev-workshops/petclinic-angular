@@ -35,9 +35,29 @@ Bootstrap 3 remains the styling contract.
   `lazy: () => import('./SomePage')` for real feature code splitting; do not add
   no-op lazy wrappers around static imports, and never use bare `React.lazy` for
   route components.
+- Preserve `type="button"` on non-submit buttons inside forms, such as the
+  legacy `< Back` controls in pet-add and vet-add. A bare React button submits
+  its containing form.
 - Angular Material's `indigo-pink` theme CSS is intentionally not carried over.
   Material widgets are replaced by the plain Bootstrap-compatible controls
   specified in `MIGRATION.md`.
+- `Form` props: `methods`, `onSubmit`, and form attributes; `FormGroup` props:
+  `name`, `label`, `rules`, `messages`, `feedback`, `requiredOnSubmit`,
+  `labelFor`, column classes, and `children`.
+- `FormField` props: `FormGroup` props plus `name`, `id`, `type`, HTML input
+  attributes, and `rules`; `SelectField` props: `FormGroup` props plus `name`,
+  `options`, option label/value callbacks, `multiple`, and select attributes.
+- `DateField` props: `FormGroup` props plus `name`, `id`, and input attributes;
+  `SubmitButton` props: button attributes and `children`; `ErrorAlert` props:
+  `message`; `PageContainer` props: optional `title` and `children`.
+- `PetList` props: `pet`, `onEditPet`, `onAddVisit`, `onDeletePet`,
+  `onEditVisit`, `onDeleteVisit`, and optional `onError`; `VisitList` props:
+  `visits`, `onEditVisit`, `onDeleteVisit`, and optional `onError`.
+- Use `feedback: "immediate"` for owner-edit and `"dirty"` elsewhere. DateField
+  stores ISO dates, SelectField stores option objects, and list delete/navigation
+  behavior is supplied through callback props.
+- Import endpoint functions from `web/src/api/` service modules rather than
+  creating feature-local axios calls or request wrappers.
 
 ## Before / after
 
