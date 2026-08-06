@@ -4,7 +4,7 @@ import { Pet } from "./types";
 export function getPets(): Promise<Pet[]> {
   return request<Pet[]>(
     { method: "GET", url: "pets" },
-    "OwnerService",
+    "PetService",
     "getPets",
   );
 }
@@ -12,7 +12,7 @@ export function getPets(): Promise<Pet[]> {
 export function getPetById(petId: number | string): Promise<Pet> {
   return request<Pet>(
     { method: "GET", url: `pets/${petId}` },
-    "OwnerService",
+    "PetService",
     "getPetById",
   );
 }
@@ -20,7 +20,7 @@ export function getPetById(petId: number | string): Promise<Pet> {
 export function addPet(pet: Pet): Promise<Pet> {
   return request<Pet>(
     { method: "POST", url: `owners/${pet.owner.id}/pets`, data: pet },
-    "OwnerService",
+    "PetService",
     "addPet",
   );
 }
@@ -28,7 +28,7 @@ export function addPet(pet: Pet): Promise<Pet> {
 export function updatePet(petId: number | string, pet: Pet): Promise<Pet> {
   return request<Pet>(
     { method: "PUT", url: `pets/${petId}`, data: pet },
-    "OwnerService",
+    "PetService",
     "updatePet",
   );
 }
@@ -36,7 +36,7 @@ export function updatePet(petId: number | string, pet: Pet): Promise<Pet> {
 export function deletePet(petId: number | string): Promise<number> {
   return request<number>(
     { method: "DELETE", url: `pets/${petId}` },
-    "OwnerService",
+    "PetService",
     "deletePet",
   );
 }

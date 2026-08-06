@@ -4,7 +4,7 @@ import { PetType } from "./types";
 export function getPetTypes(): Promise<PetType[]> {
   return request<PetType[]>(
     { method: "GET", url: "pettypes" },
-    "OwnerService",
+    "PetTypeService",
     "getPetTypes",
   );
 }
@@ -12,7 +12,7 @@ export function getPetTypes(): Promise<PetType[]> {
 export function getPetTypeById(typeId: number | string): Promise<PetType> {
   return request<PetType>(
     { method: "GET", url: `pettypes/${typeId}` },
-    "OwnerService",
+    "PetTypeService",
     "getPetTypeById",
   );
 }
@@ -23,7 +23,7 @@ export function updatePetType(
 ): Promise<PetType> {
   return request<PetType>(
     { method: "PUT", url: `pettypes/${typeId}`, data: petType },
-    "OwnerService",
+    "PetTypeService",
     "updatePetType",
   );
 }
@@ -31,7 +31,7 @@ export function updatePetType(
 export function addPetType(petType: PetType): Promise<PetType> {
   return request<PetType>(
     { method: "POST", url: "pettypes", data: petType },
-    "OwnerService",
+    "PetTypeService",
     "addPetType",
   );
 }
@@ -39,7 +39,7 @@ export function addPetType(petType: PetType): Promise<PetType> {
 export function deletePetType(typeId: number | string): Promise<number> {
   return request<number>(
     { method: "DELETE", url: `pettypes/${typeId}` },
-    "OwnerService",
+    "PetTypeService",
     "deletePetType",
   );
 }

@@ -128,31 +128,31 @@ describe("API service wrappers", () => {
     expect(request).toHaveBeenNthCalledWith(
       1,
       { method: "GET", url: "pets" },
-      "OwnerService",
+      "PetService",
       "getPets",
     );
     expect(request).toHaveBeenNthCalledWith(
       2,
       { method: "GET", url: "pets/1" },
-      "OwnerService",
+      "PetService",
       "getPetById",
     );
     expect(request).toHaveBeenNthCalledWith(
       3,
       { method: "POST", url: "owners/1/pets", data: pet },
-      "OwnerService",
+      "PetService",
       "addPet",
     );
     expect(request).toHaveBeenNthCalledWith(
       4,
       { method: "PUT", url: "pets/1", data: pet },
-      "OwnerService",
+      "PetService",
       "updatePet",
     );
     expect(request).toHaveBeenNthCalledWith(
       5,
       { method: "DELETE", url: "pets/1" },
-      "OwnerService",
+      "PetService",
       "deletePet",
     );
   });
@@ -176,77 +176,77 @@ describe("API service wrappers", () => {
 
     expect(request).toHaveBeenCalledWith(
       { method: "GET", url: "pettypes" },
-      "OwnerService",
+      "PetTypeService",
       "getPetTypes",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "GET", url: "pettypes/1" },
-      "OwnerService",
+      "PetTypeService",
       "getPetTypeById",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "POST", url: "pettypes", data: petType },
-      "OwnerService",
+      "PetTypeService",
       "addPetType",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "PUT", url: "pettypes/1", data: petType },
-      "OwnerService",
+      "PetTypeService",
       "updatePetType",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "DELETE", url: "pettypes/1" },
-      "OwnerService",
+      "PetTypeService",
       "deletePetType",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "GET", url: "specialties" },
-      "OwnerService",
+      "SpecialtyService",
       "getSpecialties",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "GET", url: "specialties/1" },
-      "OwnerService",
+      "SpecialtyService",
       "getSpecialtyById",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "POST", url: "specialties", data: specialty },
-      "OwnerService",
+      "SpecialtyService",
       "addSpecialty",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "PUT", url: "specialties/1", data: specialty },
-      "OwnerService",
+      "SpecialtyService",
       "updateSpecialty",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "DELETE", url: "specialties/1" },
-      "OwnerService",
+      "SpecialtyService",
       "deleteSpecialty",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "GET", url: "vets" },
-      "OwnerService",
+      "VetService",
       "getVets",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "GET", url: "vets/1" },
-      "OwnerService",
+      "VetService",
       "getVetById",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "POST", url: "vets", data: vet },
-      "OwnerService",
+      "VetService",
       "addVet",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "PUT", url: "vets/1", data: vet },
-      "OwnerService",
+      "VetService",
       "updateVet",
     );
     expect(request).toHaveBeenCalledWith(
       { method: "DELETE", url: "vets/1" },
-      "OwnerService",
+      "VetService",
       "deleteVet",
     );
   });
@@ -261,31 +261,31 @@ describe("API service wrappers", () => {
     expect(request).toHaveBeenNthCalledWith(
       1,
       { method: "GET", url: "visits" },
-      "OwnerService",
+      "VisitService",
       "getVisits",
     );
     expect(request).toHaveBeenNthCalledWith(
       2,
       { method: "GET", url: "visits/1" },
-      "OwnerService",
+      "VisitService",
       "getVisitById",
     );
     expect(request).toHaveBeenNthCalledWith(
       3,
       { method: "POST", url: "owners/1/pets/1/visits", data: visit },
-      "OwnerService",
+      "VisitService",
       "addVisit",
     );
     expect(request).toHaveBeenNthCalledWith(
       4,
       { method: "PUT", url: "visits/1", data: visit },
-      "OwnerService",
+      "VisitService",
       "updateVisit",
     );
     expect(request).toHaveBeenNthCalledWith(
       5,
       { method: "DELETE", url: "visits/1" },
-      "OwnerService",
+      "VisitService",
       "deleteVisit",
     );
   });

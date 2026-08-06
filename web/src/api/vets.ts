@@ -4,7 +4,7 @@ import { Vet } from "./types";
 export function getVets(): Promise<Vet[]> {
   return request<Vet[]>(
     { method: "GET", url: "vets" },
-    "OwnerService",
+    "VetService",
     "getVets",
   );
 }
@@ -12,7 +12,7 @@ export function getVets(): Promise<Vet[]> {
 export function getVetById(vetId: number | string): Promise<Vet> {
   return request<Vet>(
     { method: "GET", url: `vets/${vetId}` },
-    "OwnerService",
+    "VetService",
     "getVetById",
   );
 }
@@ -20,7 +20,7 @@ export function getVetById(vetId: number | string): Promise<Vet> {
 export function updateVet(vetId: number | string, vet: Vet): Promise<Vet> {
   return request<Vet>(
     { method: "PUT", url: `vets/${vetId}`, data: vet },
-    "OwnerService",
+    "VetService",
     "updateVet",
   );
 }
@@ -28,7 +28,7 @@ export function updateVet(vetId: number | string, vet: Vet): Promise<Vet> {
 export function addVet(vet: Vet): Promise<Vet> {
   return request<Vet>(
     { method: "POST", url: "vets", data: vet },
-    "OwnerService",
+    "VetService",
     "addVet",
   );
 }
@@ -36,7 +36,7 @@ export function addVet(vet: Vet): Promise<Vet> {
 export function deleteVet(vetId: number | string): Promise<number> {
   return request<number>(
     { method: "DELETE", url: `vets/${vetId}` },
-    "OwnerService",
+    "VetService",
     "deleteVet",
   );
 }

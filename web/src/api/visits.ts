@@ -4,7 +4,7 @@ import { Visit } from "./types";
 export function getVisits(): Promise<Visit[]> {
   return request<Visit[]>(
     { method: "GET", url: "visits" },
-    "OwnerService",
+    "VisitService",
     "getVisits",
   );
 }
@@ -12,7 +12,7 @@ export function getVisits(): Promise<Visit[]> {
 export function getVisitById(visitId: number | string): Promise<Visit> {
   return request<Visit>(
     { method: "GET", url: `visits/${visitId}` },
-    "OwnerService",
+    "VisitService",
     "getVisitById",
   );
 }
@@ -24,7 +24,7 @@ export function addVisit(visit: Visit): Promise<Visit> {
       url: `owners/${visit.pet.ownerId}/pets/${visit.pet.id}/visits`,
       data: visit,
     },
-    "OwnerService",
+    "VisitService",
     "addVisit",
   );
 }
@@ -35,7 +35,7 @@ export function updateVisit(
 ): Promise<Visit> {
   return request<Visit>(
     { method: "PUT", url: `visits/${visitId}`, data: visit },
-    "OwnerService",
+    "VisitService",
     "updateVisit",
   );
 }
@@ -43,7 +43,7 @@ export function updateVisit(
 export function deleteVisit(visitId: number | string): Promise<number> {
   return request<number>(
     { method: "DELETE", url: `visits/${visitId}` },
-    "OwnerService",
+    "VisitService",
     "deleteVisit",
   );
 }

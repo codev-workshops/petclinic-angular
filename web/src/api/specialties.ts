@@ -4,7 +4,7 @@ import { Specialty } from "./types";
 export function getSpecialties(): Promise<Specialty[]> {
   return request<Specialty[]>(
     { method: "GET", url: "specialties" },
-    "OwnerService",
+    "SpecialtyService",
     "getSpecialties",
   );
 }
@@ -12,7 +12,7 @@ export function getSpecialties(): Promise<Specialty[]> {
 export function getSpecialtyById(specId: number | string): Promise<Specialty> {
   return request<Specialty>(
     { method: "GET", url: `specialties/${specId}` },
-    "OwnerService",
+    "SpecialtyService",
     "getSpecialtyById",
   );
 }
@@ -20,7 +20,7 @@ export function getSpecialtyById(specId: number | string): Promise<Specialty> {
 export function addSpecialty(specialty: Specialty): Promise<Specialty> {
   return request<Specialty>(
     { method: "POST", url: "specialties", data: specialty },
-    "OwnerService",
+    "SpecialtyService",
     "addSpecialty",
   );
 }
@@ -31,7 +31,7 @@ export function updateSpecialty(
 ): Promise<Specialty> {
   return request<Specialty>(
     { method: "PUT", url: `specialties/${specId}`, data: specialty },
-    "OwnerService",
+    "SpecialtyService",
     "updateSpecialty",
   );
 }
@@ -39,7 +39,7 @@ export function updateSpecialty(
 export function deleteSpecialty(specId: number | string): Promise<number> {
   return request<number>(
     { method: "DELETE", url: `specialties/${specId}` },
-    "OwnerService",
+    "SpecialtyService",
     "deleteSpecialty",
   );
 }
