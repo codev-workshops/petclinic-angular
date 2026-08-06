@@ -1,12 +1,29 @@
-import { RouteObject } from "react-router-dom";
+import type { RouteObject } from "react-router-dom";
 import { Placeholder } from "../../components/Placeholder";
-
-const page = (title: string) => () => <Placeholder title={title} />;
+import { ownerDetailLoader, ownerEditLoader, ownersLoader } from "./loaders";
 
 export const ownerRoutes: RouteObject[] = [
-  { path: "owners", Component: page("Owners") },
-  { path: "owners/add", Component: page("New Owner") },
-  { path: "owners/:id", Component: page("Owner Information") },
-  { path: "owners/:id/edit", Component: page("Edit Owner") },
-  { path: "owners/:id/pets/add", Component: page("Add Pet") },
+  {
+    path: "owners",
+    loader: ownersLoader,
+    lazy: () => import("./pages/OwnerListPage"),
+  },
+  {
+    path: "owners/add",
+    lazy: () => import("./pages/OwnerAddPage"),
+  },
+  {
+    path: "owners/:id",
+    loader: ownerDetailLoader,
+    lazy: () => import("./pages/OwnerDetailPage"),
+  },
+  {
+    path: "owners/:id/edit",
+    loader: ownerEditLoader,
+    lazy: () => import("./pages/OwnerEditPage"),
+  },
+  {
+    path: "owners/:id/pets/add",
+    Component: () => <Placeholder title="Add Pet" />,
+  },
 ];

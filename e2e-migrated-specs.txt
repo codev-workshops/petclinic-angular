@@ -1,1 +1,2 @@
 e2e/playwright/specs/navigation.spec.ts
+e2e/playwright/specs/owners.spec.ts
