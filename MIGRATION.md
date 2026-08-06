@@ -69,6 +69,9 @@ Dates are always submitted to the API as `YYYY-MM-DD` (legacy used `moment(x).fo
 /pets/add               PetAdd
 /pets/:id/edit          PetEdit
 /pets/:id/visits/add    VisitAdd
+/visits                 VisitList
+/visits/add             VisitAdd
+/visits/:id/edit        VisitEdit
 /pettypes               PettypeList
 /pettypes/add           PettypeAdd
 /pettypes/:id/edit      PettypeEdit

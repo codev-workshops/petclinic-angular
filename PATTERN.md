@@ -35,6 +35,9 @@ Bootstrap 3 remains the styling contract.
   `lazy: () => import('./SomePage')` for real feature code splitting; do not add
   no-op lazy wrappers around static imports, and never use bare `React.lazy` for
   route components.
+- Preserve `type="button"` on non-submit buttons inside forms, such as the
+  legacy `< Back` controls in pet-add and vet-add. A bare React button submits
+  its containing form.
 - Angular Material's `indigo-pink` theme CSS is intentionally not carried over.
   Material widgets are replaced by the plain Bootstrap-compatible controls
   specified in `MIGRATION.md`.
@@ -53,6 +56,8 @@ Bootstrap 3 remains the styling contract.
 - Use `feedback: "immediate"` for owner-edit and `"dirty"` elsewhere. DateField
   stores ISO dates, SelectField stores option objects, and list delete/navigation
   behavior is supplied through callback props.
+- Import endpoint functions from `web/src/api/` service modules rather than
+  creating feature-local axios calls or request wrappers.
 
 ## Before / after
 
