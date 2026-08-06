@@ -37,11 +37,11 @@ export function PetList({
           <td valign="top">
             <dl className="dl-horizontal">
               <dt>Name</dt>
-              <dd>{pet.name}</dd>
+              <dd>{deleteSuccess ? "" : pet.name}</dd>
               <dt>Birth Date</dt>
-              <dd>{pet.birthDate}</dd>
+              <dd>{deleteSuccess ? "" : pet.birthDate}</dd>
               <dt>Type</dt>
-              {!deleteSuccess && <dd>{pet.type.name}</dd>}
+              {!deleteSuccess && <dd>{pet.type?.name}</dd>}
               <button
                 className="btn btn-default"
                 onClick={() => onEditPet(pet)}
@@ -61,7 +61,7 @@ export function PetList({
           </td>
           <td valign="top">
             <VisitList
-              visits={pet.visits}
+              visits={deleteSuccess ? [] : pet.visits}
               onEditVisit={onEditVisit}
               onDeleteVisit={onDeleteVisit}
               onError={onError}

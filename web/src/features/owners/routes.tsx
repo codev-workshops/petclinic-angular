@@ -1,5 +1,4 @@
 import type { RouteObject } from "react-router-dom";
-import { Placeholder } from "../../components/Placeholder";
 import { ownerLoader, ownersLoader } from "./loaders";
 
 export const ownerRoutes: RouteObject[] = [
@@ -21,9 +20,5 @@ export const ownerRoutes: RouteObject[] = [
     path: "owners/:id/edit",
     loader: ownerLoader,
     lazy: () => import("./pages/OwnerEditPage"),
-  },
-  {
-    path: "owners/:id/pets/add",
-    Component: () => <Placeholder title="Add Pet" />,
   },
 ];

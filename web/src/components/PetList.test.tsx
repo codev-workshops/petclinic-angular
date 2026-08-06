@@ -75,5 +75,8 @@ describe("PetList", () => {
         "hidden",
       ),
     );
+    expect(document.querySelector("table.table-striped")).not.toHaveTextContent(
+      "Leo",
+    );
   });
 });
