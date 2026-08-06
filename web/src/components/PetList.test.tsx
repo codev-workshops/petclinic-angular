@@ -50,7 +50,7 @@ describe("PetList", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Checkup")).toBeInTheDocument();
   });
-  it("fires callbacks and hides after successful delete", async () => {
+  it("fires callbacks and removes after successful delete", async () => {
     const onDeletePet = vi.fn().mockResolvedValue(undefined);
     const onEditPet = vi.fn();
     const onAddVisit = vi.fn();
@@ -71,9 +71,9 @@ describe("PetList", () => {
     expect(onAddVisit).toHaveBeenCalledWith(pet);
     expect(onDeletePet).toHaveBeenCalledWith(pet);
     await waitFor(() =>
-      expect(document.querySelector("table.table-striped")).toHaveAttribute(
-        "hidden",
-      ),
+      expect(
+        document.querySelector("table.table-striped"),
+      ).not.toBeInTheDocument(),
     );
     expect(document.querySelector("table.table-striped")).not.toHaveTextContent(
       "Leo",
