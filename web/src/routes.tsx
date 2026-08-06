@@ -15,8 +15,8 @@ export const router = createBrowserRouter(
       path: "/",
       element: <Layout />,
       children: [
-        { index: true, lazy: async () => ({ Component: Welcome }) },
-        { path: "welcome", lazy: async () => ({ Component: Welcome }) },
+        { index: true, Component: Welcome },
+        { path: "welcome", Component: Welcome },
         ...ownerRoutes,
         ...petRoutes,
         ...visitRoutes,

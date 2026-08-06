@@ -10,6 +10,10 @@ module.exports = {
     'react-refresh/only-export-components': 'warn',
     quotes: 'off',
     '@typescript-eslint/quotes': 'off',
+    'no-restricted-imports': [
+      'error',
+      { patterns: ['src/**', '../src/**', '../../src/**', '../../../src/**'] },
+    ],
   },
   overrides: [{ files: ['*.ts', '*.tsx'], parser: '@typescript-eslint/parser' }],
 };

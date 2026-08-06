@@ -4,6 +4,10 @@
 `web/`; keep the shared API client, Bootstrap 3 DOM contract, and route loaders
 as the stable seams between feature waves.
 
+The complete `src/assets` tree is intentionally copied into `web/assets`, so
+React never imports from Angular's `src/` tree. The Angular `src/` directory,
+including its assets copy, disappears at cutover.
+
 The repository remains one npm project with one lockfile. Vite serves `web/` at
 `/petclinic/` on port 4200, and the data router uses basename `/petclinic`.
 Use Vite + React + TypeScript, React Router data-router route-level `lazy`,
@@ -27,7 +31,13 @@ Bootstrap 3 remains the styling contract.
 - `@Output` becomes a callback prop.
 - `*ngIf` becomes conditional JSX and `*ngFor` becomes `map`.
 - Content projection becomes `children`.
-- Use route-level `lazy`; never use bare `React.lazy` for route components.
+- Use `Component` for eagerly imported route components. Use route-level
+  `lazy: () => import('./SomePage')` for real feature code splitting; do not add
+  no-op lazy wrappers around static imports, and never use bare `React.lazy` for
+  route components.
+- Angular Material's `indigo-pink` theme CSS is intentionally not carried over.
+  Material widgets are replaced by the plain Bootstrap-compatible controls
+  specified in `MIGRATION.md`.
 
 ## Before / after
 

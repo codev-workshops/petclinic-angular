@@ -4,14 +4,10 @@ import { Placeholder } from "../../components/Placeholder";
 export const specialtyRoutes: RouteObject[] = [
   {
     path: "specialties",
-    lazy: async () => ({
-      Component: () => <Placeholder title="Specialties" />,
-    }),
+    Component: () => <Placeholder title="Specialties" />,
   },
   {
     path: "specialties/:id/edit",
-    lazy: async () => ({
-      Component: () => <Placeholder title="Edit Specialty" />,
-    }),
+    Component: () => <Placeholder title="Edit Specialty" />,
   },
 ];

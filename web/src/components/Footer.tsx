@@ -1,5 +1,5 @@
-import angularImage from "../../../src/assets/images/angular.png";
-import pivotalImage from "../../../src/assets/images/spring-pivotal-logo.png";
+import angularImage from "../../assets/images/angular.png";
+import pivotalImage from "../../assets/images/spring-pivotal-logo.png";
 
 export function Footer() {
   return (

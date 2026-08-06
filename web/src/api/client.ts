@@ -31,10 +31,7 @@ client.interceptors.response.use(undefined, (error: AxiosError) => {
         headerMessage = undefined;
       }
     }
-    const body =
-      typeof response.data === "string"
-        ? response.data
-        : JSON.stringify(response.data);
+    const body = String(response.data);
     message =
       headerMessage ||
       `server returned code ${response.status} with body "${body}"`;

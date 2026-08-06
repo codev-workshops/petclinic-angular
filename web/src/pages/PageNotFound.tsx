@@ -1,4 +1,4 @@
-import petsImage from "../../../src/assets/images/pets.png";
+import petsImage from "../../assets/images/pets.png";
 
 export function PageNotFound() {
   return (

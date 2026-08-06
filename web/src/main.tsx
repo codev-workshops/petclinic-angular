@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../src/assets/css/petclinic.css";
+import "../assets/css/petclinic.css";
 import { router } from "./routes";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
