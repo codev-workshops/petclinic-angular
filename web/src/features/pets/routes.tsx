@@ -1,12 +1,12 @@
-import { RouteObject } from "react-router-dom";
-import { Placeholder } from "../../components/Placeholder";
+import type { RouteObject } from "react-router-dom";
 
 export const petRoutes: RouteObject[] = [
-  { path: "pets", Component: () => <Placeholder title="Pets" /> },
-  { path: "pets/add", Component: () => <Placeholder title="Add Pet" /> },
-  { path: "pets/:id/edit", Component: () => <Placeholder title="Pet" /> },
+  { path: "pets", lazy: () => import("./PetListPage") },
+  { path: "pets/add", lazy: () => import("./PetAddPage") },
   {
-    path: "pets/:id/visits/add",
-    Component: () => <Placeholder title="New Visit" />,
+    path: "owners/:id/pets/add",
+    lazy: () => import("./PetAddPage"),
   },
+  { path: "pets/:id/edit", lazy: () => import("./PetEditPage") },
+  { path: "pets/:id/visits/add", lazy: () => import("../visits/VisitAddPage") },
 ];
