@@ -13,7 +13,7 @@ import {
 } from "react-router-dom";
 import { getOwnerById, updateOwner } from "../../../api";
 import type { Owner } from "../../../api/types";
-import { ownerEditLoader } from "../loaders";
+import { ownerLoader } from "../loaders";
 import { Component } from "./OwnerEditPage";
 
 vi.mock("../../../api", () => ({
@@ -40,7 +40,7 @@ function renderEdit() {
     [
       {
         path: "/owners/:id/edit",
-        loader: ownerEditLoader,
+        loader: ownerLoader,
         element: <Component />,
       },
       { path: "/owners/:id", element: <Location /> },

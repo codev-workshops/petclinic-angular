@@ -50,8 +50,12 @@ export function Component() {
   });
 
   const onSubmit = async (values: OwnerFormValues) => {
-    await addOwner({ ...values, id: null } as unknown as Owner);
-    navigate("/owners");
+    try {
+      await addOwner({ ...values, id: null } as unknown as Owner);
+      navigate("/owners");
+    } catch {
+      // Legacy assigned this error to an unrendered field; stay on the form.
+    }
   };
 
   return (

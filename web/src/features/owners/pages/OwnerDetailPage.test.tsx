@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { deletePet, deleteVisit, getOwnerById } from "../../../api";
 import type { Owner } from "../../../api/types";
-import { ownerDetailLoader } from "../loaders";
+import { ownerLoader } from "../loaders";
 import { Component } from "./OwnerDetailPage";
 
 vi.mock("../../../api", () => ({
@@ -35,7 +35,7 @@ function renderDetail() {
     [
       {
         path: "/owners/:id",
-        loader: ownerDetailLoader,
+        loader: ownerLoader,
         element: <Component />,
       },
       { path: "/owners", element: <Location /> },

@@ -18,17 +18,7 @@ export async function ownersLoader(): Promise<OwnersLoaderData> {
   }
 }
 
-export async function ownerDetailLoader({
-  params,
-}: LoaderFunctionArgs): Promise<OwnerLoaderData> {
-  try {
-    return { owner: await getOwnerById(params.id ?? "") };
-  } catch {
-    return { owner: {} as Owner };
-  }
-}
-
-export async function ownerEditLoader({
+export async function ownerLoader({
   params,
 }: LoaderFunctionArgs): Promise<OwnerLoaderData> {
   try {
