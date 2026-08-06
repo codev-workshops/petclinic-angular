@@ -40,13 +40,13 @@ const rules = {
 };
 const firstMessages = {
   maxlength: "First Name may be only 30 characters long",
-  minlength: "First Name must be at least 2 characters long",
+  minlength: "First Name must be at least 1 characters long",
   pattern: "First Name may only consist of letters",
   required: "First Name is required",
 };
 const lastMessages = {
   maxlength: "Last Name may be only 30 characters long",
-  minlength: "Last Name must be at least 2 characters long",
+  minlength: "Last Name must be at least 1 characters long",
   pattern: "Last Name may only consist of letters",
   required: "Last Name is required",
 };

@@ -46,7 +46,6 @@ export function Component() {
                   className="form-control"
                   name="pettype_name"
                   value={item.name}
-                  onChange={() => undefined}
                 />
               </td>
               <td>
@@ -63,7 +62,6 @@ export function Component() {
                   Delete
                 </button>
               </td>
-              <td />
             </tr>
           ))}
         </tbody>

@@ -59,7 +59,6 @@ export function Component() {
                   Delete Vet
                 </button>
               </td>
-              <td />
             </tr>
           ))}
         </tbody>
