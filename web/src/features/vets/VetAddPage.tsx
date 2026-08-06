@@ -99,6 +99,7 @@ export function Component() {
             label="Type "
             id="specialties"
             options={specialties}
+            hasFeedback={false}
           />
         </div>
         <div className="form-group">

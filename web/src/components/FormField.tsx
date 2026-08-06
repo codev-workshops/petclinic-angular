@@ -13,6 +13,7 @@ export interface FormFieldProps
     Omit<InputHTMLAttributes<HTMLInputElement>, "name"> {
   name: string;
   rules?: FieldRules;
+  renderGroup?: boolean;
 }
 
 export function FormField({
@@ -23,6 +24,8 @@ export function FormField({
   messages,
   feedback,
   requiredOnSubmit,
+  hasFeedback,
+  renderGroup = true,
   labelClassName,
   controlClassName,
   id,
@@ -38,6 +41,26 @@ export function FormField({
   const { register } = useFormContext<FieldValues>();
   const state = useFieldState(name);
   const registered = register(name) as UseFormRegisterReturn;
+  const input = (
+    <input
+      {...registered}
+      {...props}
+      id={id ?? name}
+      name={name}
+      type={type}
+      className={className ?? "form-control"}
+      required={required ?? rules.required}
+      minLength={minLength ?? rules.minLength}
+      maxLength={maxLength ?? rules.maxLength}
+      pattern={pattern ?? rules.pattern}
+      onChange={(event) => {
+        state.markDirty();
+        registered.onChange(event);
+        onChange?.(event);
+      }}
+    />
+  );
+  if (!renderGroup) return input;
   return (
     <FormGroup
       name={name}
@@ -46,27 +69,12 @@ export function FormField({
       messages={messages}
       feedback={feedback}
       requiredOnSubmit={requiredOnSubmit}
+      hasFeedback={hasFeedback}
       labelClassName={labelClassName}
       controlClassName={controlClassName}
       rules={rules}
     >
-      <input
-        {...registered}
-        {...props}
-        id={id ?? name}
-        name={name}
-        type={type}
-        className={className ?? "form-control"}
-        required={required ?? rules.required}
-        minLength={minLength ?? rules.minLength}
-        maxLength={maxLength ?? rules.maxLength}
-        pattern={pattern ?? rules.pattern}
-        onChange={(event) => {
-          state.markDirty();
-          registered.onChange(event);
-          onChange?.(event);
-        }}
-      />
+      {input}
     </FormGroup>
   );
 }
