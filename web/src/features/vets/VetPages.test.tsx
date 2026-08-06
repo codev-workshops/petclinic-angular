@@ -66,6 +66,11 @@ describe("vet pages", () => {
               }),
               Component: Add,
             },
+            {
+              path: "/vets",
+              loader: () => ({ vets: [] }),
+              Component: List,
+            },
           ],
           { initialEntries: ["/vets/add"] },
         )}
