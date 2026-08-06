@@ -8,6 +8,7 @@ import {
   DateField,
   Form,
   FormField,
+  FormGroup,
   PageContainer,
   SelectField,
   SubmitButton,
@@ -132,28 +133,34 @@ export function Component() {
           messages={{ required: "BirthDate is required" }}
         />
         <div className="control-group">
-          <div className="form-group has-feedback">
-            <label htmlFor="type" className="col-sm-2 control-label">
-              Type{" "}
-            </label>
-            <div className="col-sm-10">
-              <div className="col-sm-2">
-                <input
-                  id="type1"
-                  name="type1"
-                  className="form-control"
-                  type="text"
-                  readOnly
-                  value={selectedType?.name ?? ""}
-                />
-              </div>
+          <FormGroup
+            name="pettype"
+            label="Type "
+            labelFor="type"
+            feedback="dirty"
+            rules={{ required: true, minLength: 2 }}
+            messages={{
+              required: "First name is required",
+              minlength: "First name must be at least 2 characters long",
+            }}
+          >
+            <div className="col-sm-2">
+              <input
+                id="type1"
+                name="type1"
+                className="form-control"
+                type="text"
+                readOnly
+                value={selectedType?.name ?? ""}
+              />
+            </div>
+            <div className="col-sm-8">
               <SelectField
                 name="pettype"
                 id="type"
                 label=""
                 labelFor={null}
-                controlClassName="col-sm-8"
-                feedback="dirty"
+                renderGroup={false}
                 options={petTypes}
                 rules={{ required: true, minLength: 2 }}
                 messages={{
@@ -162,7 +169,7 @@ export function Component() {
                 }}
               />
             </div>
-          </div>
+          </FormGroup>
         </div>
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">

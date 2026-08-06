@@ -11,6 +11,7 @@ export interface SelectFieldProps<T>
   getOptionLabel?: (option: T) => string;
   getOptionValue?: (option: T) => string;
   multiple?: boolean;
+  renderGroup?: boolean;
 }
 
 export function SelectField<T>({
@@ -25,6 +26,8 @@ export function SelectField<T>({
   messages,
   feedback,
   requiredOnSubmit,
+  hasFeedback,
+  renderGroup = true,
   labelClassName,
   controlClassName,
   id,
@@ -43,6 +46,33 @@ export function SelectField<T>({
     : selected
       ? getOptionValue(selected as T)
       : "";
+  const select = (
+    <select
+      {...props}
+      {...field}
+      id={id ?? name}
+      name={name}
+      className={className ?? "form-control"}
+      multiple={multiple}
+      value={value}
+      onChange={(event) => {
+        state.markDirty();
+        const selectedOptions = Array.from(event.currentTarget.selectedOptions)
+          .map((option) =>
+            options.find((item) => getOptionValue(item) === option.value),
+          )
+          .filter((item): item is T => item !== undefined);
+        field.onChange(multiple ? selectedOptions : selectedOptions[0]);
+      }}
+    >
+      {options.map((option) => (
+        <option key={getOptionValue(option)} value={getOptionValue(option)}>
+          {getOptionLabel(option)}
+        </option>
+      ))}
+    </select>
+  );
+  if (!renderGroup) return select;
   return (
     <FormGroup
       name={name}
@@ -51,36 +81,12 @@ export function SelectField<T>({
       messages={messages}
       feedback={feedback}
       requiredOnSubmit={requiredOnSubmit}
+      hasFeedback={hasFeedback}
       labelClassName={labelClassName}
       controlClassName={controlClassName}
       rules={rules}
     >
-      <select
-        {...props}
-        {...field}
-        id={id ?? name}
-        name={name}
-        className={className ?? "form-control"}
-        multiple={multiple}
-        value={value}
-        onChange={(event) => {
-          state.markDirty();
-          const selectedOptions = Array.from(
-            event.currentTarget.selectedOptions,
-          )
-            .map((option) =>
-              options.find((item) => getOptionValue(item) === option.value),
-            )
-            .filter((item): item is T => item !== undefined);
-          field.onChange(multiple ? selectedOptions : selectedOptions[0]);
-        }}
-      >
-        {options.map((option) => (
-          <option key={getOptionValue(option)} value={getOptionValue(option)}>
-            {getOptionLabel(option)}
-          </option>
-        ))}
-      </select>
+      {select}
     </FormGroup>
   );
 }

@@ -113,7 +113,7 @@ export function Component() {
             messages={{
               required: "Description is required",
               minlength: "Description must be at least 1 characters long",
-              maxlength: "Description may be at most 255 characters long",
+              maxlength: "Description may be at most 255 charaters long",
             }}
           />
         </div>
