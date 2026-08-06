@@ -9,7 +9,7 @@ export default defineConfig({
   use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:4200' },
   projects: [{ name: 'chromium' }],
   webServer: {
-    command: 'npm start -- --port 4200',
+    command: 'npm run dev -- --host 127.0.0.1 --port 4200',
     url: 'http://localhost:4200',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
