@@ -33,7 +33,9 @@ React scripts (default `npm run …`):
 | `lint` | ESLint (flat config, React/TS files only) |
 | `typecheck` | `tsc -p tsconfig.react.json --noEmit` |
 | `test` | Vitest (`npm run test -- --run` for a single pass) |
-| `test:e2e` | Playwright |
+| `test:e2e` | Playwright parity suite (`e2e/journeys`) against the React app; needs the backend on 9966 |
+| `test:e2e:angular` / `test:e2e:both` | Same suite against Angular (`ng:start`, 4200) / both (`TARGET=angular|react|both`) |
+| `test:e2e:visual-diff` | pixelmatch report of `e2e/__screenshots__/{angular,react}` → `docs/migration/PARITY.md` |
 
 Angular scripts keep working under an `ng:` prefix: `ng:start`, `ng:build`, `ng:test`,
 `ng:lint`, `ng:e2e`. CI for the React app lives in `.github/workflows/react-ci.yml`.

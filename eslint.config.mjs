@@ -11,7 +11,8 @@ export default tseslint.config(
       'dist/**',
       'node_modules/**',
       'docs/**',
-      'e2e/**',
+      'e2e-protractor/**',
+      'e2e/__screenshots__/**',
       'src/app/**',
       'src/main.ts',
       'src/polyfills.ts',
@@ -21,6 +22,7 @@ export default tseslint.config(
       'karma.conf.js',
       'protractor.conf.js',
       'playwright-report/**',
+      'e2e/.tmp/**',
       'test-results/**',
     ],
   },
@@ -40,5 +42,17 @@ export default tseslint.config(
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     },
+  },
+  {
+    // Playwright parity suite: fixtures use `use()` callbacks and `{}` dependency lists.
+    files: ['e2e/**/*.ts', 'playwright.config.ts'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
+      'no-empty-pattern': 'off',
+    },
+  },
+  {
+    files: ['e2e/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node } },
   },
 );
