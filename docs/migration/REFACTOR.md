@@ -117,6 +117,41 @@ Notable ones: `getXById → {}` would have rendered an empty detail page instead
 Angular; `add*/update* → input` made a failed save look successful. The parity suite asserts the
 React behaviour (error alert shown), so this PR does not change it.
 
+## Step 8 — Final verification
+
+- `npm run test:e2e` (dev server) → 22 passed; `npm run test:e2e:visual-diff` regenerated
+  `e2e/__screenshots__/react/**`, `diff/**` and `report.md` (Angular reference untouched; range
+  3.9 %–13.7 %, all explained by the intended restyle / native controls). `docs/migration/PARITY.md`
+  rewritten for the React-only run.
+- `docker build -t petclinic-react:phase4 .` → nginx serves `http://localhost:8080/petclinic/`
+  (200 for `/petclinic/` and deep link `/petclinic/owners/1`, assets under `/petclinic/assets/`);
+  `REACT_BASE_URL=http://localhost:8080/petclinic/ npm run test:e2e` → 22 passed.
+- Dependency count: **before 25 + 49 = 74 → after 8 + 21 = 29 direct** (`package.json`).
+
+## Residual tech debt
+
+1. **`ApiError.fallback` is dead data** (step 7): the 30 Angular fallbacks are carried on the error
+   but never read. Product decision needed: drop the argument or restore silent defaults per
+   operation.
+2. **Parity hook class names** (`navbar`, `dropdown`, `dropdown-toggle`, `table`,
+   `table-condensed`, `dl-horizontal`, `help-block`, `alert alert-danger`, `loading-indicator`)
+   are kept as unstyled semantic hooks for `e2e/**`. Moving the suite to `data-testid` / role
+   queries would let them go.
+3. **Forms are hand-rolled controlled state**; `react-hook-form` was deliberately not added. If the
+   forms grow, `zodResolver` + `useForm` can replace the per-form `useState`/`dirty` bookkeeping
+   while keeping `src/forms/schemas.ts`.
+4. **Message typos inherited from the Angular templates** ("Name may be at least 1 characters
+   long", "Name may be at most 30 character long", "Phone number only accept digits") are kept
+   verbatim because the parity suite asserts them.
+5. **Legacy navigation and layout compromises**: `vetEditLoader` pre-fetches via the router loader
+   (Angular resolver parity) while every other page fetches in-component; the vet specialties picker
+   is a native `<select multiple>`.
+6. **No CSS linting** (stylelint) for the new CSS Modules; tokens are plain custom properties with
+   no type-level check.
+7. **`e2e/__screenshots__/angular/**`** remains only as a historical reference and will drift from
+   the React screenshots on every restyle; delete it once the Angular comparison is no longer
+   needed.
+
 ## Per-step parity log
 
 | Step | Commit | e2e | lint / typecheck / vitest / build |
@@ -126,5 +161,5 @@ React behaviour (error alert shown), so this PR does not change it.
 | 3 CSS Modules + tokens + lucide | `1e7c298` | 22/22 (react) | green (vitest 166) |
 | 4 Zod schemas | `56d7ff2` | 22/22 (react) | green (vitest 169) |
 | 5 `@/` alias + ESLint rule | `d83dc1e` | 22/22 (react) | green (vitest 169) |
-| 6 legacy dep verification | — | (no code change) | — |
-| 7 api.ts fallback inventory | — | (docs only) | — |
+| 6+7 legacy dep verification, api.ts fallback inventory | `edb3377` | (no code change) | — |
+| 8 screenshots, PARITY.md, Docker | — | 22/22 dev + 22/22 Docker image | green (vitest 169) |
