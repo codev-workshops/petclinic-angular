@@ -1,0 +1,25 @@
+name: React CI
+
+on:
+  pull_request:
+    branches:
+      - react-migration
+      - main
+  push:
+    branches:
+      - react-migration
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test -- --run
+      - run: npm run build

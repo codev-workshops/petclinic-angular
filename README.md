@@ -8,6 +8,36 @@ Warning: **client only**.
   Use REST API from backend [spring-petclinic-rest project](https://github.com/spring-petclinic/spring-petclinic-rest)
   You need start backend server before start frontend application.
 
+## React app (migration in progress)
+
+This repository hosts **two** frontends while the Angular 16 → React 19 migration is in
+progress (see `AGENTS.md` and `docs/migration/*`):
+
+| | Angular (legacy) | React (default) |
+|---|---|---|
+| Entry | `src/index.html`, `src/main.ts`, `src/app/**` | `index.html`, `src/main.tsx`, `src/App.tsx` |
+| Source | `src/app/**` | `src/{components,features,models,services,mocks,utils,test}/**` |
+| Tooling | Angular CLI, Karma, Protractor (`tsconfig.json`, `angular.json`) | Vite, Vitest + Testing Library + MSW, Playwright (`tsconfig.react.json`, `vite.config.ts`, `vitest.config.ts`, `eslint.config.mjs`) |
+| Dev server | `npm run ng:start` → `http://localhost:4200/` | `npm run dev` → `http://localhost:5173/petclinic/` |
+
+Both apps expect the [spring-petclinic-rest](https://github.com/spring-petclinic/spring-petclinic-rest)
+backend at `http://localhost:9966/petclinic/api/` and are served under `/petclinic/`.
+
+React scripts (default `npm run …`):
+
+| Script | Purpose |
+|---|---|
+| `dev` | Vite dev server at `http://localhost:5173/petclinic/` |
+| `build` | Production build to `dist/` (used by the `Dockerfile`, served by nginx on 8080) |
+| `preview` | Serve the production build locally |
+| `lint` | ESLint (flat config, React/TS files only) |
+| `typecheck` | `tsc -p tsconfig.react.json --noEmit` |
+| `test` | Vitest (`npm run test -- --run` for a single pass) |
+| `test:e2e` | Playwright |
+
+Angular scripts keep working under an `ng:` prefix: `ng:start`, `ng:build`, `ng:test`,
+`ng:lint`, `ng:e2e`. CI for the React app lives in `.github/workflows/react-ci.yml`.
+
 ## Screenshot
 
 ![Screenshot of SPring Petclinic Angular](https://cloud.githubusercontent.com/assets/838318/23263243/f4509c4a-f9dd-11e6-951b-69d0ef72d8bd.png)
