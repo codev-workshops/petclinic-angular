@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Specialty } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import { useDeleteSpecialty, useSpecialtiesQuery } from '../hooks/useSpecialties';
-import SpecialtyAdd from '../components/SpecialtyAdd';
+import type { Specialty } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import { useDeleteSpecialty, useSpecialtiesQuery } from '@/features/specialties/hooks/useSpecialties';
+import SpecialtyAdd from '@/features/specialties/components/SpecialtyAdd';
 import styles from './SpecialtyListPage.module.css';
-import Page from '../../../components/ui/Page';
-import Input from '../../../components/ui/Input';
-import Button from '../../../components/ui/Button';
-import Table from '../../../components/ui/Table';
+import Page from '@/components/ui/Page';
+import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
+import Table from '@/components/ui/Table';
 
 /** Port of specialty-list.component (route `specialties`). */
 export default function SpecialtyListPage() {

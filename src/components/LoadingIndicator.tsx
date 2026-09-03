@@ -1,5 +1,5 @@
 import { LoaderCircle } from 'lucide-react';
-import { cx } from '../utils/cx';
+import { cx } from '@/utils/cx';
 import styles from './LoadingIndicator.module.css';
 
 interface LoadingIndicatorProps {

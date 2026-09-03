@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getErrorMessage } from '../../../services/api';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import PetTypeForm from '../components/PetTypeForm';
-import { usePetTypeQuery, useUpdatePetTypeMutation } from '../hooks/usePetTypes';
-import Page from '../../../components/ui/Page';
-import Button from '../../../components/ui/Button';
+import { getErrorMessage } from '@/services/api';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import PetTypeForm from '@/features/pettypes/components/PetTypeForm';
+import { usePetTypeQuery, useUpdatePetTypeMutation } from '@/features/pettypes/hooks/usePetTypes';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
 
 /** Port of PettypeEditComponent (src/app/pettypes/pettype-edit). */
 export default function PetTypeEditPage() {

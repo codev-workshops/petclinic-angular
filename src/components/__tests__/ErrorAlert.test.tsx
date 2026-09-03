@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ErrorAlert from '../ErrorAlert';
+import ErrorAlert from '@/components/ErrorAlert';
 
 describe('ErrorAlert', () => {
   it('renders nothing without a message', () => {

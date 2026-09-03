@@ -1,6 +1,6 @@
-import Field from '../../../components/ui/Field';
-import Input from '../../../components/ui/Input';
-import { fieldIssues, vetNameSchema } from '../../../forms/schemas';
+import Field from '@/components/ui/Field';
+import Input from '@/components/ui/Input';
+import { fieldIssues, vetNameSchema } from '@/forms/schemas';
 
 export interface VetNameFieldProps {
   id: 'firstName' | 'lastName';

@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import { ApiError } from '../errorHandler';
+import { ApiError } from '@/services/errorHandler';
 
 /** Silences the console.error calls made by createHandleError during expected failures. */
 export function silenceConsoleError() {

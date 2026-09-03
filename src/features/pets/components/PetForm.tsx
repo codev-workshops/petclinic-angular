@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import type { Owner, Pet, PetType } from '../../../models';
-import type { FieldStatus } from '../../../components/ui/Field';
-import Button from '../../../components/ui/Button';
-import Field from '../../../components/ui/Field';
-import Form from '../../../components/ui/Form';
-import FormActions from '../../../components/ui/FormActions';
-import Input from '../../../components/ui/Input';
-import Select from '../../../components/ui/Select';
-import { fieldIssues, petSchema } from '../../../forms/schemas';
-import type { PetFormValues } from '../../../forms/schemas';
+import type { Owner, Pet, PetType } from '@/models';
+import type { FieldStatus } from '@/components/ui/Field';
+import Button from '@/components/ui/Button';
+import Field from '@/components/ui/Field';
+import Form from '@/components/ui/Form';
+import FormActions from '@/components/ui/FormActions';
+import Input from '@/components/ui/Input';
+import Select from '@/components/ui/Select';
+import { fieldIssues, petSchema } from '@/forms/schemas';
+import type { PetFormValues } from '@/forms/schemas';
 
-export type { PetFormValues } from '../../../forms/schemas';
+export type { PetFormValues } from '@/forms/schemas';
 
 export function toPetFormValues(pet: Pet | undefined): PetFormValues {
   return {

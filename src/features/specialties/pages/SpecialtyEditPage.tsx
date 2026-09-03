@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Specialty } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import { useSpecialtyQuery, useUpdateSpecialty } from '../hooks/useSpecialties';
-import SpecialtyForm from '../components/SpecialtyForm';
+import type { Specialty } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import { useSpecialtyQuery, useUpdateSpecialty } from '@/features/specialties/hooks/useSpecialties';
+import SpecialtyForm from '@/features/specialties/components/SpecialtyForm';
 import styles from './SpecialtyEditPage.module.css';
-import Page from '../../../components/ui/Page';
-import Button from '../../../components/ui/Button';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
 
 const LIST_ROUTE = '/specialties';
 

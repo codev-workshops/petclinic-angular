@@ -1,11 +1,11 @@
 import { useId, useState } from 'react';
 import type { FormEvent } from 'react';
-import type { Specialty } from '../../../models';
-import Button from '../../../components/ui/Button';
-import Field from '../../../components/ui/Field';
-import Form from '../../../components/ui/Form';
-import Input from '../../../components/ui/Input';
-import { SPECIALTY_NAME_MAX_LENGTH, fieldIssues, specialtyNameSchema } from '../../../forms/schemas';
+import type { Specialty } from '@/models';
+import Button from '@/components/ui/Button';
+import Field from '@/components/ui/Field';
+import Form from '@/components/ui/Form';
+import Input from '@/components/ui/Input';
+import { SPECIALTY_NAME_MAX_LENGTH, fieldIssues, specialtyNameSchema } from '@/forms/schemas';
 
 interface SpecialtyFormProps {
   /** Existing specialty for the edit form; `undefined` for the inline add form. */

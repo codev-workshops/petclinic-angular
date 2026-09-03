@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { EntityId, Specialty } from '../../../models';
+import type { EntityId, Specialty } from '@/models';
 import {
   addSpecialty,
   deleteSpecialty,
@@ -7,7 +7,7 @@ import {
   getSpecialtyById,
   queryKeys,
   updateSpecialty,
-} from '../../../services/api';
+} from '@/services/api';
 
 /** GET specialties (SpecialtyService.getSpecialties). */
 export function useSpecialtiesQuery() {

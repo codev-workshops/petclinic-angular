@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Owner } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import { getErrorMessage } from '../../../services/api';
-import OwnerForm from '../components/OwnerForm';
-import type { OwnerFormValues } from '../components/OwnerForm';
-import { useAddOwnerMutation } from '../hooks/useOwners';
-import { useBackNavigation } from '../hooks/useBackNavigation';
-import Page from '../../../components/ui/Page';
+import type { Owner } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import { getErrorMessage } from '@/services/api';
+import OwnerForm from '@/features/owners/components/OwnerForm';
+import type { OwnerFormValues } from '@/features/owners/components/OwnerForm';
+import { useAddOwnerMutation } from '@/features/owners/hooks/useOwners';
+import { useBackNavigation } from '@/features/owners/hooks/useBackNavigation';
+import Page from '@/components/ui/Page';
 
 /**
  * Port of owner-add.component (route `owners/add`). Angular returns to the list after

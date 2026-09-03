@@ -1,5 +1,5 @@
-import Page from '../../components/ui/Page';
-import petsLogo from '../../assets/images/pets.png';
+import Page from '@/components/ui/Page';
+import petsLogo from '@/assets/images/pets.png';
 import styles from './Welcome.module.css';
 
 /** Port of src/app/parts/page-not-found/page-not-found.component.html */

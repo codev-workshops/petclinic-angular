@@ -1,5 +1,5 @@
 import type { TableHTMLAttributes } from 'react';
-import { cx } from '../../utils/cx';
+import { cx } from '@/utils/cx';
 import styles from './Table.module.css';
 
 interface TableProps extends TableHTMLAttributes<HTMLTableElement> {

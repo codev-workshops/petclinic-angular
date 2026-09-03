@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Pet } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import { getErrorMessage } from '../../../services/api';
-import VisitTable from '../../visits/components/VisitTable';
-import { useDeletePetMutation } from '../hooks/usePets';
-import { cx } from '../../../utils/cx';
+import type { Pet } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import { getErrorMessage } from '@/services/api';
+import VisitTable from '@/features/visits/components/VisitTable';
+import { useDeletePetMutation } from '@/features/pets/hooks/usePets';
+import { cx } from '@/utils/cx';
 import styles from './PetCard.module.css';
-import Button from '../../../components/ui/Button';
-import Table from '../../../components/ui/Table';
+import Button from '@/components/ui/Button';
+import Table from '@/components/ui/Table';
 
 interface PetCardProps {
   pet: Pet;

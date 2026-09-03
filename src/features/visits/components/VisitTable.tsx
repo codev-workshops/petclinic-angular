@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Visit } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import { getErrorMessage } from '../../../services/api';
-import { useDeleteVisitMutation } from '../hooks/useVisits';
+import type { Visit } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import { getErrorMessage } from '@/services/api';
+import { useDeleteVisitMutation } from '@/features/visits/hooks/useVisits';
 import styles from './VisitTable.module.css';
-import Button from '../../../components/ui/Button';
-import Table from '../../../components/ui/Table';
+import Button from '@/components/ui/Button';
+import Table from '@/components/ui/Table';
 
 interface VisitTableProps {
   visits: Visit[];

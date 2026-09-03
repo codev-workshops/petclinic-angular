@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Visit } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import { useBackNavigation } from '../../owners/hooks/useBackNavigation';
-import { useOwnerQuery } from '../../owners/hooks/useOwners';
-import { usePetQuery } from '../../pets/hooks/usePets';
-import VisitForm from '../components/VisitForm';
-import type { VisitFormValues } from '../components/VisitForm';
-import VisitPetSummary from '../components/VisitPetSummary';
-import VisitTable from '../components/VisitTable';
-import { useAddVisitMutation } from '../hooks/useVisits';
+import type { Visit } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import { useBackNavigation } from '@/features/owners/hooks/useBackNavigation';
+import { useOwnerQuery } from '@/features/owners/hooks/useOwners';
+import { usePetQuery } from '@/features/pets/hooks/usePets';
+import VisitForm from '@/features/visits/components/VisitForm';
+import type { VisitFormValues } from '@/features/visits/components/VisitForm';
+import VisitPetSummary from '@/features/visits/components/VisitPetSummary';
+import VisitTable from '@/features/visits/components/VisitTable';
+import { useAddVisitMutation } from '@/features/visits/hooks/useVisits';
 import styles from './VisitAddPage.module.css';
-import Page from '../../../components/ui/Page';
-import Button from '../../../components/ui/Button';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
 
 /**
  * Port of visit-add.component. Routed as `pets/:id/visits/add` (the Angular URL) and `visits/add`;

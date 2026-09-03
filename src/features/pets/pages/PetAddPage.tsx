@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Pet } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import { useBackNavigation } from '../../owners/hooks/useBackNavigation';
-import { useOwnerQuery } from '../../owners/hooks/useOwners';
-import PetForm from '../components/PetForm';
-import type { PetFormValues } from '../components/PetForm';
-import { useAddPetMutation, usePetTypesQuery } from '../hooks/usePets';
-import Page from '../../../components/ui/Page';
-import Button from '../../../components/ui/Button';
+import type { Pet } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import { useBackNavigation } from '@/features/owners/hooks/useBackNavigation';
+import { useOwnerQuery } from '@/features/owners/hooks/useOwners';
+import PetForm from '@/features/pets/components/PetForm';
+import type { PetFormValues } from '@/features/pets/components/PetForm';
+import { useAddPetMutation, usePetTypesQuery } from '@/features/pets/hooks/usePets';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
 
 /**
  * Port of pet-add.component. Routed as `owners/:id/pets/add` (the Angular URL) and `pets/add`;

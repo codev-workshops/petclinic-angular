@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { EntityId, Owner, Pet, PetType, Specialty, Vet, Visit } from '../models';
+import type { EntityId, Owner, Pet, PetType, Specialty, Vet, Visit } from '@/models';
 import { createHandleError } from './errorHandler';
 
 export { queryClient } from './queryClient';

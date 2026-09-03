@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import type { Owner } from '../../../models';
-import Button from '../../../components/ui/Button';
-import Field from '../../../components/ui/Field';
-import Form from '../../../components/ui/Form';
-import FormActions from '../../../components/ui/FormActions';
-import Input from '../../../components/ui/Input';
-import { OWNER_FIELD_ORDER, OWNER_LABELS, fieldIssues, ownerSchema } from '../../../forms/schemas';
-import type { OwnerFieldName, OwnerFormValues } from '../../../forms/schemas';
+import type { Owner } from '@/models';
+import Button from '@/components/ui/Button';
+import Field from '@/components/ui/Field';
+import Form from '@/components/ui/Form';
+import FormActions from '@/components/ui/FormActions';
+import Input from '@/components/ui/Input';
+import { OWNER_FIELD_ORDER, OWNER_LABELS, fieldIssues, ownerSchema } from '@/forms/schemas';
+import type { OwnerFieldName, OwnerFormValues } from '@/forms/schemas';
 
-export type { OwnerFormValues } from '../../../forms/schemas';
+export type { OwnerFormValues } from '@/forms/schemas';
 
 export function toOwnerFormValues(owner: Owner | undefined): OwnerFormValues {
   return {

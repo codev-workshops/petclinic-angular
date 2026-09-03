@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { EntityId, Pet } from '../../../models';
-import { addPet, deletePet, getPetById, getPets, getPetTypes, queryKeys, updatePet } from '../../../services/api';
+import type { EntityId, Pet } from '@/models';
+import { addPet, deletePet, getPetById, getPets, getPetTypes, queryKeys, updatePet } from '@/services/api';
 
 export function usePetsQuery() {
   return useQuery({ queryKey: queryKeys.pets.list(), queryFn: getPets });

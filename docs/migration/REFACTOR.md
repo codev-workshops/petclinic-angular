@@ -78,6 +78,13 @@ fields with bespoke gating, and a resolver would have hidden the Angular quirks 
 
 Dependency count after step 4: 8 + 21 = 29 direct (`+zod`).
 
+## Step 5 — `@/` import alias
+
+`@/*` → `src/*` in `tsconfig.json` (`baseUrl` + `paths`), `vite.config.ts` and `vitest.config.ts`
+(`resolve.alias`). All 330 cross-folder (`../`) imports in `src/**` were rewritten to `@/…`;
+same-folder `./` imports stay relative. Enforced by ESLint `no-restricted-imports` with the pattern
+group `../*` for `src/**/*.{ts,tsx}` (CSS `url(../assets/…)` references are unaffected).
+
 ## Per-step parity log
 
 | Step | Commit | e2e | lint / typecheck / vitest / build |
@@ -85,4 +92,5 @@ Dependency count after step 4: 8 + 21 = 29 direct (`+zod`).
 | 1 Baseline | `2fe325a` | 44/44 (angular + react) | green |
 | 2 Decommission Angular | `2e13f65` | 22/22 (react) | green (vitest 166) |
 | 3 CSS Modules + tokens + lucide | `1e7c298` | 22/22 (react) | green (vitest 166) |
-| 4 Zod schemas | — | 22/22 (react) | green (vitest 169) |
+| 4 Zod schemas | `56d7ff2` | 22/22 (react) | green (vitest 169) |
+| 5 `@/` alias + ESLint rule | — | 22/22 (react) | green (vitest 169) |

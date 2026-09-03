@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import NavBar from './NavBar';
-import springLogo from '../assets/images/spring-pivotal-logo.png';
+import springLogo from '@/assets/images/spring-pivotal-logo.png';
 import styles from './Layout.module.css';
 
 export default function Layout() {

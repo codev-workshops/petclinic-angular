@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { PetType } from '../../../models';
-import { getErrorMessage } from '../../../services/api';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { useDeletePetTypeMutation, usePetTypesQuery } from '../hooks/usePetTypes';
+import type { PetType } from '@/models';
+import { getErrorMessage } from '@/services/api';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { useDeletePetTypeMutation, usePetTypesQuery } from '@/features/pettypes/hooks/usePetTypes';
 import styles from './PetTypeListPage.module.css';
-import Page from '../../../components/ui/Page';
-import Input from '../../../components/ui/Input';
-import Button from '../../../components/ui/Button';
-import Table from '../../../components/ui/Table';
+import Page from '@/components/ui/Page';
+import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
+import Table from '@/components/ui/Table';
 
 /** Port of PettypeListComponent (src/app/pettypes/pettype-list). */
 export default function PetTypeListPage() {

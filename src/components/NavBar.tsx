@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ChevronDown, GraduationCap, Heart, Home, List, Plus, Search, User } from 'lucide-react';
-import { cx } from '../utils/cx';
+import { cx } from '@/utils/cx';
 import styles from './NavBar.module.css';
 
 type Menu = 'owners' | 'vets';

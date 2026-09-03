@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Owner } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import OwnerForm from '../components/OwnerForm';
-import type { OwnerFormValues } from '../components/OwnerForm';
-import { useOwnerQuery, useUpdateOwnerMutation } from '../hooks/useOwners';
-import { useBackNavigation } from '../hooks/useBackNavigation';
-import Page from '../../../components/ui/Page';
-import Button from '../../../components/ui/Button';
+import type { Owner } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import OwnerForm from '@/features/owners/components/OwnerForm';
+import type { OwnerFormValues } from '@/features/owners/components/OwnerForm';
+import { useOwnerQuery, useUpdateOwnerMutation } from '@/features/owners/hooks/useOwners';
+import { useBackNavigation } from '@/features/owners/hooks/useBackNavigation';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
 
 /** Port of owner-edit.component (route `owners/:id/edit`). */
 export default function OwnerEditPage() {

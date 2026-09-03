@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import { usePetsQuery } from '../hooks/usePets';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import { usePetsQuery } from '@/features/pets/hooks/usePets';
 import styles from './PetListPage.module.css';
-import Page from '../../../components/ui/Page';
-import Table from '../../../components/ui/Table';
+import Page from '@/components/ui/Page';
+import Table from '@/components/ui/Table';
 
 /**
  * Route `pets`. Angular mounted PetListComponent here without any input (it rendered an empty

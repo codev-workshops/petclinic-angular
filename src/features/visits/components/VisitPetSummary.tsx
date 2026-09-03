@@ -1,5 +1,5 @@
-import type { Owner, Pet } from '../../../models';
-import Table from '../../../components/ui/Table';
+import type { Owner, Pet } from '@/models';
+import Table from '@/components/ui/Table';
 
 interface VisitPetSummaryProps {
   pet: Pet | undefined;

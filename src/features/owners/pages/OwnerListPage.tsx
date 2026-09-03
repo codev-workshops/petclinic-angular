@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import { useOwnersSearchQuery } from '../hooks/useOwners';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import { useOwnersSearchQuery } from '@/features/owners/hooks/useOwners';
 import styles from './OwnerListPage.module.css';
-import Page from '../../../components/ui/Page';
-import Button from '../../../components/ui/Button';
-import Field from '../../../components/ui/Field';
-import Form from '../../../components/ui/Form';
-import FormActions from '../../../components/ui/FormActions';
-import Input from '../../../components/ui/Input';
-import Table from '../../../components/ui/Table';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
+import Field from '@/components/ui/Field';
+import Form from '@/components/ui/Form';
+import FormActions from '@/components/ui/FormActions';
+import Input from '@/components/ui/Input';
+import Table from '@/components/ui/Table';
 
 /** Port of owner-list.component (route `owners`). */
 export default function OwnerListPage() {

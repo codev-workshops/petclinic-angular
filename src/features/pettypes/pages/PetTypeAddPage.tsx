@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getErrorMessage } from '../../../services/api';
-import ErrorAlert from '../../../components/ErrorAlert';
-import PetTypeForm from '../components/PetTypeForm';
-import { useAddPetTypeMutation } from '../hooks/usePetTypes';
-import Page from '../../../components/ui/Page';
+import { getErrorMessage } from '@/services/api';
+import ErrorAlert from '@/components/ErrorAlert';
+import PetTypeForm from '@/features/pettypes/components/PetTypeForm';
+import { useAddPetTypeMutation } from '@/features/pettypes/hooks/usePetTypes';
+import Page from '@/components/ui/Page';
 
 /**
  * Port of PettypeAddComponent (src/app/pettypes/pettype-add). Angular embeds this

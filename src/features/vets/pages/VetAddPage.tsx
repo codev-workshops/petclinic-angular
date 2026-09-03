@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getErrorMessage } from '../../../services/api';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import VetForm from '../components/VetForm';
-import type { VetFormValues } from '../components/VetForm';
-import { useAddVetMutation, useSpecialtiesQuery } from '../hooks/useVets';
-import Page from '../../../components/ui/Page';
+import { getErrorMessage } from '@/services/api';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import VetForm from '@/features/vets/components/VetForm';
+import type { VetFormValues } from '@/features/vets/components/VetForm';
+import { useAddVetMutation, useSpecialtiesQuery } from '@/features/vets/hooks/useVets';
+import Page from '@/components/ui/Page';
 
 /** Port of VetAddComponent (src/app/vets/vet-add). */
 export default function VetAddPage() {

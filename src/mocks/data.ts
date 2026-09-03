@@ -1,4 +1,4 @@
-import type { Owner, Pet, PetType, Specialty, Vet, Visit } from '../models';
+import type { Owner, Pet, PetType, Specialty, Vet, Visit } from '@/models';
 
 /** Fixtures shaped like spring-petclinic-rest responses. Fresh copies per call keep tests independent. */
 

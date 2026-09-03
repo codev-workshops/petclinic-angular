@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { cx } from '../utils/cx';
+import { cx } from '@/utils/cx';
 import styles from './ErrorAlert.module.css';
 
 interface ErrorAlertProps {

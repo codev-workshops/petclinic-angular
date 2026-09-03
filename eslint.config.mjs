@@ -33,6 +33,23 @@ export default tseslint.config(
     },
   },
   {
+    // Cross-folder imports use the `@/` alias; relative paths only within a folder.
+    files: ['src/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['../*'],
+              message: 'Use the `@/` alias for cross-folder imports; relative imports only within a folder.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     // Playwright parity suite: fixtures use `use()` callbacks and `{}` dependency lists.
     files: ['e2e/**/*.ts', 'playwright.config.ts'],
     rules: {

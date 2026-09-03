@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import type { Visit } from '../../../models';
-import type { FieldStatus } from '../../../components/ui/Field';
-import Button from '../../../components/ui/Button';
-import Field from '../../../components/ui/Field';
-import Form from '../../../components/ui/Form';
-import FormActions from '../../../components/ui/FormActions';
-import Input from '../../../components/ui/Input';
-import { fieldIssues, visitSchema } from '../../../forms/schemas';
-import type { VisitFormValues } from '../../../forms/schemas';
+import type { Visit } from '@/models';
+import type { FieldStatus } from '@/components/ui/Field';
+import Button from '@/components/ui/Button';
+import Field from '@/components/ui/Field';
+import Form from '@/components/ui/Form';
+import FormActions from '@/components/ui/FormActions';
+import Input from '@/components/ui/Input';
+import { fieldIssues, visitSchema } from '@/forms/schemas';
+import type { VisitFormValues } from '@/forms/schemas';
 
-export type { VisitFormValues } from '../../../forms/schemas';
+export type { VisitFormValues } from '@/forms/schemas';
 
 export function toVisitFormValues(visit: Visit | undefined): VisitFormValues {
   return { date: visit?.date ?? '', description: visit?.description ?? '' };

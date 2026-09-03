@@ -1,4 +1,4 @@
-import type { EntityId } from '../models';
+import type { EntityId } from '@/models';
 
 /**
  * Query-key factory. Keys are hierarchical so that invalidating

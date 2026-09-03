@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import Button from '../../../components/ui/Button';
-import Field from '../../../components/ui/Field';
-import Form from '../../../components/ui/Form';
-import Input from '../../../components/ui/Input';
-import { fieldIssues, petTypeNameSchema } from '../../../forms/schemas';
+import Button from '@/components/ui/Button';
+import Field from '@/components/ui/Field';
+import Form from '@/components/ui/Form';
+import Input from '@/components/ui/Input';
+import { fieldIssues, petTypeNameSchema } from '@/forms/schemas';
 
 interface PetTypeFormProps {
   initialName?: string;

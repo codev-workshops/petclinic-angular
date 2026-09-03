@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fieldIssues, ownerSchema, petTypeNameSchema, vetNameSchema } from '../schemas';
+import { fieldIssues, ownerSchema, petTypeNameSchema, vetNameSchema } from '@/forms/schemas';
 
 describe('forms/schemas', () => {
   it('reports only `required` on an empty value (Angular validator semantics)', () => {

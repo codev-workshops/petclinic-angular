@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import type { Specialty } from '../../../models';
+import type { Specialty } from '@/models';
 import VetNameField from './VetNameField';
-import Button from '../../../components/ui/Button';
-import Field from '../../../components/ui/Field';
-import Form from '../../../components/ui/Form';
-import FormActions from '../../../components/ui/FormActions';
-import Select from '../../../components/ui/Select';
-import { vetSchema } from '../../../forms/schemas';
+import Button from '@/components/ui/Button';
+import Field from '@/components/ui/Field';
+import Form from '@/components/ui/Form';
+import FormActions from '@/components/ui/FormActions';
+import Select from '@/components/ui/Select';
+import { vetSchema } from '@/forms/schemas';
 
 export interface VetFormValues {
   firstName: string;

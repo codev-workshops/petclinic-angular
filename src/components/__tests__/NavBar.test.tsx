@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import NavBar from '../NavBar';
+import NavBar from '@/components/NavBar';
 
 function renderNavBar(path = '/') {
   return render(

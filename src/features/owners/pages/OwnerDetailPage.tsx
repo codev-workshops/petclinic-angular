@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import PetCard from '../../pets/components/PetCard';
-import { useDeleteOwnerMutation, useOwnerQuery } from '../hooks/useOwners';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import PetCard from '@/features/pets/components/PetCard';
+import { useDeleteOwnerMutation, useOwnerQuery } from '@/features/owners/hooks/useOwners';
 import styles from './OwnerDetailPage.module.css';
-import Page from '../../../components/ui/Page';
-import Button from '../../../components/ui/Button';
-import Table from '../../../components/ui/Table';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
+import Table from '@/components/ui/Table';
 
 /**
  * Port of owner-detail.component (route `owners/:id`). The "Delete Owner" button has no

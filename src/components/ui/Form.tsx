@@ -1,5 +1,5 @@
 import type { FormHTMLAttributes } from 'react';
-import { cx } from '../../utils/cx';
+import { cx } from '@/utils/cx';
 import styles from './Form.module.css';
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {

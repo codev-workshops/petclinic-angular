@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Check, X } from 'lucide-react';
-import { cx } from '../../utils/cx';
+import { cx } from '@/utils/cx';
 import styles from './Form.module.css';
 
 export type FieldStatus = 'valid' | 'invalid' | null;

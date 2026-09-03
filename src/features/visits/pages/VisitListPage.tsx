@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import { useVisitsQuery } from '../hooks/useVisits';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import { useVisitsQuery } from '@/features/visits/hooks/useVisits';
 import styles from './VisitListPage.module.css';
-import Page from '../../../components/ui/Page';
-import Table from '../../../components/ui/Table';
+import Page from '@/components/ui/Page';
+import Table from '@/components/ui/Table';
 
 /**
  * Route `visits`. Angular mounted VisitListComponent here with no input (an empty table);

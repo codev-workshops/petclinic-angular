@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
-import { getErrorMessage } from '../../../services/api';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import VetForm from '../components/VetForm';
-import type { VetFormValues } from '../components/VetForm';
-import { useSpecialtiesQuery, useUpdateVetMutation, useVetQuery } from '../hooks/useVets';
+import { getErrorMessage } from '@/services/api';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import VetForm from '@/features/vets/components/VetForm';
+import type { VetFormValues } from '@/features/vets/components/VetForm';
+import { useSpecialtiesQuery, useUpdateVetMutation, useVetQuery } from '@/features/vets/hooks/useVets';
 import type { VetEditLoaderData } from './vetEditLoader';
-import Page from '../../../components/ui/Page';
-import Button from '../../../components/ui/Button';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
 
 /**
  * Port of VetEditComponent (src/app/vets/vet-edit). `vetEditLoader` has already put the

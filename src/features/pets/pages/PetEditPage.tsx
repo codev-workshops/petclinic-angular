@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Pet, PetType } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import { useBackNavigation } from '../../owners/hooks/useBackNavigation';
-import { useOwnerQuery } from '../../owners/hooks/useOwners';
-import PetForm from '../components/PetForm';
-import type { PetFormValues } from '../components/PetForm';
-import { usePetQuery, usePetTypesQuery, useUpdatePetMutation } from '../hooks/usePets';
-import Page from '../../../components/ui/Page';
-import Button from '../../../components/ui/Button';
+import type { Pet, PetType } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import { useBackNavigation } from '@/features/owners/hooks/useBackNavigation';
+import { useOwnerQuery } from '@/features/owners/hooks/useOwners';
+import PetForm from '@/features/pets/components/PetForm';
+import type { PetFormValues } from '@/features/pets/components/PetForm';
+import { usePetQuery, usePetTypesQuery, useUpdatePetMutation } from '@/features/pets/hooks/usePets';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
 
 /** Port of pet-edit.component (route `pets/:id/edit`). */
 export default function PetEditPage() {
