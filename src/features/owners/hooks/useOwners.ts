@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { EntityId, Owner } from '../../../models';
+import type { EntityId, Owner } from '@/models';
 import {
   addOwner,
   deleteOwner,
@@ -8,7 +8,7 @@ import {
   queryKeys,
   searchOwners,
   updateOwner,
-} from '../../../services/api';
+} from '@/services/api';
 
 /** Port of OwnerService (src/app/owners/owner.service.ts) on top of TanStack Query. */
 

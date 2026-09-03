@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
-import { getErrorMessage } from '../../../services/api';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import VetForm from '../components/VetForm';
-import type { VetFormValues } from '../components/VetForm';
-import { useSpecialtiesQuery, useUpdateVetMutation, useVetQuery } from '../hooks/useVets';
+import { getErrorMessage } from '@/services/api';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import VetForm from '@/features/vets/components/VetForm';
+import type { VetFormValues } from '@/features/vets/components/VetForm';
+import { useSpecialtiesQuery, useUpdateVetMutation, useVetQuery } from '@/features/vets/hooks/useVets';
 import type { VetEditLoaderData } from './vetEditLoader';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
 
 /**
  * Port of VetEditComponent (src/app/vets/vet-edit). `vetEditLoader` has already put the
@@ -48,28 +50,30 @@ export default function VetEditPage() {
   const errorMessage = saveError ?? loadError;
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>Edit Veterinarian</h2>
-        <ErrorAlert message={errorMessage} onDismiss={() => setSaveError(null)} />
-        {isLoading && <LoadingIndicator />}
-        {vet && specialties && (
-          <VetForm
-            key={vet.id}
-            variant="edit"
-            initialValues={{ firstName: vet.firstName, lastName: vet.lastName, specialties: vet.specialties ?? [] }}
-            specialties={specialties}
-            isSubmitting={updateMutation.isPending}
-            onSubmit={handleSubmit}
-            onBack={gotoVetList}
-          />
-        )}
-        {loadError && !vet && (
-          <button className="btn btn-default" type="button" onClick={gotoVetList}>
-            &lt; Back
-          </button>
-        )}
-      </div>
-    </div>
+    <Page>
+      <h2>Edit Veterinarian</h2>
+      <ErrorAlert message={errorMessage} onDismiss={() => setSaveError(null)} />
+      {isLoading && <LoadingIndicator />}
+      {vet && specialties && (
+        <VetForm
+          key={vet.id}
+          variant="edit"
+          initialValues={{
+            firstName: vet.firstName,
+            lastName: vet.lastName,
+            specialties: vet.specialties ?? [],
+          }}
+          specialties={specialties}
+          isSubmitting={updateMutation.isPending}
+          onSubmit={handleSubmit}
+          onBack={gotoVetList}
+        />
+      )}
+      {loadError && !vet && (
+        <Button type="button" onClick={gotoVetList}>
+          &lt; Back
+        </Button>
+      )}
+    </Page>
   );
 }

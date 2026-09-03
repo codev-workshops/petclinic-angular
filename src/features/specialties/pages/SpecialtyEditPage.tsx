@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Specialty } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import { useSpecialtyQuery, useUpdateSpecialty } from '../hooks/useSpecialties';
-import SpecialtyForm from '../components/SpecialtyForm';
+import type { Specialty } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import { useSpecialtyQuery, useUpdateSpecialty } from '@/features/specialties/hooks/useSpecialties';
+import SpecialtyForm from '@/features/specialties/components/SpecialtyForm';
 import styles from './SpecialtyEditPage.module.css';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
 
 const LIST_ROUTE = '/specialties';
 
@@ -53,29 +55,27 @@ export default function SpecialtyEditPage() {
   };
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>Edit Specialty</h2>
-        <ErrorAlert message={errorMessage} onDismiss={dismissError} />
-        {specialtyQuery.isLoading && <LoadingIndicator label="Loading specialty..." />}
-        {specialtyQuery.data && (
-          <div className={styles.formWrapper}>
-            <SpecialtyForm
-              key={specialtyQuery.data.id}
-              specialty={specialtyQuery.data}
-              submitLabel="Update"
-              isSubmitting={updateMutation.isPending}
-              onSubmit={handleSubmit}
-              onCancel={goBack}
-            />
-          </div>
-        )}
-        {!specialtyQuery.isLoading && !specialtyQuery.data && (
-          <button className="btn btn-default" type="button" onClick={goBack}>
-            Back to specialties
-          </button>
-        )}
-      </div>
-    </div>
+    <Page>
+      <h2>Edit Specialty</h2>
+      <ErrorAlert message={errorMessage} onDismiss={dismissError} />
+      {specialtyQuery.isLoading && <LoadingIndicator label="Loading specialty..." />}
+      {specialtyQuery.data && (
+        <div className={styles.formWrapper}>
+          <SpecialtyForm
+            key={specialtyQuery.data.id}
+            specialty={specialtyQuery.data}
+            submitLabel="Update"
+            isSubmitting={updateMutation.isPending}
+            onSubmit={handleSubmit}
+            onCancel={goBack}
+          />
+        </div>
+      )}
+      {!specialtyQuery.isLoading && !specialtyQuery.data && (
+        <Button type="button" onClick={goBack}>
+          Back to specialties
+        </Button>
+      )}
+    </Page>
   );
 }

@@ -1,4 +1,5 @@
-import type { Owner, Pet } from '../../../models';
+import type { Owner, Pet } from '@/models';
+import Table from '@/components/ui/Table';
 
 interface VisitPetSummaryProps {
   pet: Pet | undefined;
@@ -10,7 +11,7 @@ export default function VisitPetSummary({ pet, owner }: VisitPetSummaryProps) {
   return (
     <>
       <b>Pet</b>
-      <table className="table table-striped">
+      <Table striped>
         <thead>
           <tr>
             <th>Name</th>
@@ -27,7 +28,7 @@ export default function VisitPetSummary({ pet, owner }: VisitPetSummaryProps) {
             <td>{owner ? `${owner.firstName} ${owner.lastName}` : ''}</td>
           </tr>
         </tbody>
-      </table>
+      </Table>
     </>
   );
 }

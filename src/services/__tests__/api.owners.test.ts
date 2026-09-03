@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import { server } from '../../mocks/server';
-import { apiUrl, httpError, networkError } from '../../mocks/handlers';
-import { makeErrorsHeader, makeOwners } from '../../mocks/data';
-import { addOwner, deleteOwner, getOwnerById, getOwners, searchOwners, updateOwner } from '../api';
+import { server } from '@/mocks/server';
+import { apiUrl, httpError, networkError } from '@/mocks/handlers';
+import { makeErrorsHeader, makeOwners } from '@/mocks/data';
+import { addOwner, deleteOwner, getOwnerById, getOwners, searchOwners, updateOwner } from '@/services/api';
 import { expectApiError, silenceConsoleError } from './testUtils';
 
 describe('owners API', () => {

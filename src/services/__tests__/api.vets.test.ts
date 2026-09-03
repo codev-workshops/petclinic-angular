@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { server } from '../../mocks/server';
-import { networkError } from '../../mocks/handlers';
-import { makeVets } from '../../mocks/data';
-import { addVet, deleteVet, getVetById, getVets, updateVet } from '../api';
+import { server } from '@/mocks/server';
+import { networkError } from '@/mocks/handlers';
+import { makeVets } from '@/mocks/data';
+import { addVet, deleteVet, getVetById, getVets, updateVet } from '@/services/api';
 import { expectApiError, silenceConsoleError } from './testUtils';
 
 describe('vets API', () => {

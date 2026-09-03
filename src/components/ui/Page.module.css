@@ -1,0 +1,10 @@
+.page {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: var(--space-7) auto var(--space-6);
+  padding: 0 var(--space-5);
+}
+
+.page > h2 {
+  margin-bottom: var(--space-4);
+}

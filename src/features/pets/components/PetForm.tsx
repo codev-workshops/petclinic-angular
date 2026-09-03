@@ -1,43 +1,17 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import type { Owner, Pet, PetType } from '../../../models';
-import styles from './PetForm.module.css';
+import type { Owner, Pet, PetType } from '@/models';
+import type { FieldStatus } from '@/components/ui/Field';
+import Button from '@/components/ui/Button';
+import Field from '@/components/ui/Field';
+import Form from '@/components/ui/Form';
+import FormActions from '@/components/ui/FormActions';
+import Input from '@/components/ui/Input';
+import Select from '@/components/ui/Select';
+import { fieldIssues, petSchema } from '@/forms/schemas';
+import type { PetFormValues } from '@/forms/schemas';
 
-/** pet-add/pet-edit templates: `pattern="^[A-Za-z0-9].{0,29}$"`. */
-const PET_NAME_PATTERN = /^[A-Za-z0-9].{0,29}$/;
-const NAME_MIN_LENGTH = 1;
-const NAME_MAX_LENGTH = 30;
-
-export interface PetFormValues {
-  name: string;
-  birthDate: string;
-  typeId: string;
-}
-
-export interface PetNameErrors {
-  required?: true;
-  minlength?: true;
-  maxlength?: true;
-  pattern?: true;
-}
-
-/** Angular's minlength/maxlength/pattern validators pass on an empty value; only `required` fires. */
-export function validatePetName(value: string): PetNameErrors {
-  if (value.length === 0) {
-    return { required: true };
-  }
-  const errors: PetNameErrors = {};
-  if (value.length < NAME_MIN_LENGTH) {
-    errors.minlength = true;
-  }
-  if (value.length > NAME_MAX_LENGTH) {
-    errors.maxlength = true;
-  }
-  if (!PET_NAME_PATTERN.test(value)) {
-    errors.pattern = true;
-  }
-  return errors;
-}
+export type { PetFormValues } from '@/forms/schemas';
 
 export function toPetFormValues(pet: Pet | undefined): PetFormValues {
   return {
@@ -60,13 +34,19 @@ interface PetFormProps {
 /** Shared add/edit form (pet-add.component.html / pet-edit.component.html). */
 export default function PetForm({ pet, owner, petTypes, submitLabel, isSubmitting, onSubmit, onBack }: PetFormProps) {
   const [values, setValues] = useState<PetFormValues>(() => toPetFormValues(pet));
-  const [dirty, setDirty] = useState({ name: false, birthDate: false, typeId: false });
+  const [dirty, setDirty] = useState({
+    name: false,
+    birthDate: false,
+    typeId: false,
+  });
 
-  const nameErrors = validatePetName(values.name);
-  const isNameValid = Object.keys(nameErrors).length === 0;
-  const isBirthDateValid = values.birthDate !== '';
+  const nameIssues = fieldIssues(petSchema.shape.name, values.name);
+  const birthDateIssues = fieldIssues(petSchema.shape.birthDate, values.birthDate);
+  const typeIssues = fieldIssues(petSchema.shape.typeId, values.typeId);
+  const isNameValid = nameIssues.length === 0;
+  const isBirthDateValid = birthDateIssues.length === 0;
   const selectedType = petTypes.find((type) => String(type.id) === values.typeId);
-  const isTypeValid = selectedType !== undefined;
+  const isTypeValid = typeIssues.length === 0 && selectedType !== undefined;
   const isFormValid = isNameValid && isBirthDateValid && isTypeValid;
 
   const handleChange = (field: keyof PetFormValues, value: string) => {
@@ -82,129 +62,89 @@ export default function PetForm({ pet, owner, petTypes, submitLabel, isSubmittin
     onSubmit(values, selectedType);
   };
 
-  const groupClass = (isDirty: boolean, isValid: boolean) =>
-    ['form-group', 'has-feedback', isDirty && isValid ? 'has-success' : '', isDirty && !isValid ? 'has-error' : '']
-      .filter(Boolean)
-      .join(' ');
+  const messages = (isDirty: boolean, issues: { message: string }[]) =>
+    isDirty ? issues.map((issue) => issue.message) : [];
+
+  const status = (isDirty: boolean, isValid: boolean): FieldStatus =>
+    isDirty ? (isValid ? 'valid' : 'invalid') : null;
 
   const ownerName = owner ? `${owner.firstName} ${owner.lastName}` : '';
 
   return (
-    <form className="form-horizontal" onSubmit={handleSubmit} noValidate>
-      <div className="form-group">
-        <label htmlFor="owner_name" className="col-sm-2 control-label">
-          Owner
-        </label>
-        <div className="col-sm-10">
-          <input id="owner_name" name="owner_name" className="form-control" type="text" value={ownerName} readOnly />
-        </div>
-      </div>
-      <br />
+    <Form onSubmit={handleSubmit}>
+      <Field id="owner_name" label="Owner">
+        <Input id="owner_name" name="owner_name" type="text" value={ownerName} readOnly />
+      </Field>
 
-      <div className={groupClass(dirty.name, isNameValid)}>
-        <label htmlFor="name" className="col-sm-2 control-label">
-          Name
-        </label>
-        <div className="col-sm-10">
-          <input
-            id="name"
-            name="name"
-            className="form-control"
-            type="text"
-            required
-            value={values.name}
-            aria-invalid={dirty.name && !isNameValid ? true : undefined}
-            aria-describedby="name-errors"
-            onChange={(event) => handleChange('name', event.target.value)}
-          />
-          <span
-            className={`glyphicon form-control-feedback ${isNameValid ? 'glyphicon-ok' : 'glyphicon-remove'}`}
-            aria-hidden="true"
-          ></span>
-          <div id="name-errors" className={styles.errors}>
-            {dirty.name && nameErrors.required && <span className="help-block">Name is required</span>}
-            {dirty.name && nameErrors.minlength && (
-              <span className="help-block">Name must be at least 1 character long</span>
-            )}
-            {dirty.name && nameErrors.maxlength && (
-              <span className="help-block">Name may be at most 30 character long</span>
-            )}
-            {dirty.name && nameErrors.pattern && <span className="help-block">Name must begin with a letter</span>}
-          </div>
-        </div>
-      </div>
+      <Field
+        id="name"
+        label="Name"
+        status={status(dirty.name, isNameValid)}
+        errorsId="name-errors"
+        errors={messages(dirty.name, nameIssues)}
+      >
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          required
+          value={values.name}
+          aria-invalid={dirty.name && !isNameValid ? true : undefined}
+          aria-describedby="name-errors"
+          onChange={(event) => handleChange('name', event.target.value)}
+        />
+      </Field>
 
-      <div className={groupClass(dirty.birthDate, isBirthDateValid)}>
-        <label htmlFor="birthDate" className="col-sm-2 control-label">
-          Birth Date
-        </label>
-        <div className="col-sm-10">
-          <input
-            id="birthDate"
-            name="birthDate"
-            className="form-control"
-            type="date"
-            required
-            value={values.birthDate}
-            aria-invalid={dirty.birthDate && !isBirthDateValid ? true : undefined}
-            aria-describedby="birthDate-errors"
-            onChange={(event) => handleChange('birthDate', event.target.value)}
-          />
-          <span
-            className={`glyphicon form-control-feedback ${isBirthDateValid ? 'glyphicon-ok' : 'glyphicon-remove'}`}
-            aria-hidden="true"
-          ></span>
-          <div id="birthDate-errors" className={styles.errors}>
-            {dirty.birthDate && !isBirthDateValid && <span className="help-block">BirthDate is required</span>}
-          </div>
-        </div>
-      </div>
+      <Field
+        id="birthDate"
+        label="Birth Date"
+        status={status(dirty.birthDate, isBirthDateValid)}
+        errorsId="birthDate-errors"
+        errors={messages(dirty.birthDate, birthDateIssues)}
+      >
+        <Input
+          id="birthDate"
+          name="birthDate"
+          type="date"
+          required
+          value={values.birthDate}
+          aria-invalid={dirty.birthDate && !isBirthDateValid ? true : undefined}
+          aria-describedby="birthDate-errors"
+          onChange={(event) => handleChange('birthDate', event.target.value)}
+        />
+      </Field>
 
-      <div className="control-group">
-        <div className={groupClass(dirty.typeId, isTypeValid)}>
-          <label htmlFor="type" className="col-sm-2 control-label">
-            Type{' '}
-          </label>
-          <div className="col-sm-10">
-            <select
-              id="type"
-              name="type"
-              className="form-control"
-              required
-              value={values.typeId}
-              aria-invalid={dirty.typeId && !isTypeValid ? true : undefined}
-              aria-describedby="type-errors"
-              onChange={(event) => handleChange('typeId', event.target.value)}
-            >
-              <option value=""></option>
-              {petTypes.map((type) => (
-                <option key={type.id} value={String(type.id)}>
-                  {type.name}
-                </option>
-              ))}
-            </select>
-            <span
-              className={`glyphicon form-control-feedback ${isTypeValid ? 'glyphicon-ok' : 'glyphicon-remove'}`}
-              aria-hidden="true"
-            ></span>
-            <div id="type-errors" className={styles.errors}>
-              {dirty.typeId && !isTypeValid && <span className="help-block">pettype is required</span>}
-            </div>
-          </div>
-        </div>
-      </div>
+      <Field
+        id="type"
+        label="Type"
+        status={status(dirty.typeId, isTypeValid)}
+        errorsId="type-errors"
+        errors={messages(dirty.typeId, typeIssues)}
+      >
+        <Select
+          id="type"
+          name="type"
+          required
+          value={values.typeId}
+          aria-invalid={dirty.typeId && !isTypeValid ? true : undefined}
+          aria-describedby="type-errors"
+          onChange={(event) => handleChange('typeId', event.target.value)}
+        >
+          <option value=""></option>
+          {petTypes.map((type) => (
+            <option key={type.id} value={String(type.id)}>
+              {type.name}
+            </option>
+          ))}
+        </Select>
+      </Field>
 
-      <div className="form-group">
-        <div className="col-sm-offset-2 col-sm-10">
-          <br />
-          <button className="btn btn-default" type="button" onClick={onBack}>
-            &lt; Back
-          </button>
-          <button className="btn btn-default" type="submit" disabled={!isFormValid || isSubmitting}>
-            {submitLabel}
-          </button>
-        </div>
-      </div>
-    </form>
+      <FormActions>
+        <Button onClick={onBack}>&lt; Back</Button>
+        <Button type="submit" disabled={!isFormValid || isSubmitting}>
+          {submitLabel}
+        </Button>
+      </FormActions>
+    </Form>
   );
 }

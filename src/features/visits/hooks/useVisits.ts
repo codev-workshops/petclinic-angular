@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { EntityId, Visit } from '../../../models';
-import { addVisit, deleteVisit, getVisitById, getVisits, queryKeys, updateVisit } from '../../../services/api';
+import type { EntityId, Visit } from '@/models';
+import { addVisit, deleteVisit, getVisitById, getVisits, queryKeys, updateVisit } from '@/services/api';
 
 export function useVisitsQuery() {
   return useQuery({ queryKey: queryKeys.visits.list(), queryFn: getVisits });

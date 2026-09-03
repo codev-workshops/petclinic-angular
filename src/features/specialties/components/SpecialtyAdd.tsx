@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import type { Specialty } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import { getErrorMessage } from '../../../services/api';
-import { useAddSpecialty } from '../hooks/useSpecialties';
+import type { Specialty } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import { getErrorMessage } from '@/services/api';
+import { useAddSpecialty } from '@/features/specialties/hooks/useSpecialties';
 import SpecialtyForm from './SpecialtyForm';
 import styles from './SpecialtyAdd.module.css';
 

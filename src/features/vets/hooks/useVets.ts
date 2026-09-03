@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { EntityId, Vet } from '../../../models';
-import { addVet, deleteVet, getSpecialties, getVetById, getVets, queryKeys, updateVet } from '../../../services/api';
+import type { EntityId, Vet } from '@/models';
+import { addVet, deleteVet, getSpecialties, getVetById, getVets, queryKeys, updateVet } from '@/services/api';
 
 /** Port of VetService (src/app/vets/vet.service.ts) on top of TanStack Query. */
 

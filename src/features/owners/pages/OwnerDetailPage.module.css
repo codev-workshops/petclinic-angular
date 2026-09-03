@@ -7,3 +7,7 @@
 .empty {
   margin: 10px 0;
 }
+
+.petsHeading {
+  margin-top: var(--space-7);
+}

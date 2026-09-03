@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createMemoryRouter } from 'react-router-dom';
-import { appRoutes } from '../../../router';
-import { queryClient } from '../../../services/queryClient';
+import { appRoutes } from '@/router';
+import { queryClient } from '@/services/queryClient';
 
 /** Renders the full app route tree at `path` (routes must work when opened directly by URL). */
 export function renderAt(path: string) {

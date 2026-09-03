@@ -107,27 +107,29 @@ for both apps, so rolling back is purely a frontend image swap. Re-run the smoke
 
 `main` is *not* reverted on rollback; fix forward on `react-migration` and cut over again.
 
-## 5. Wave 4 — Angular decommission checklist (do NOT execute in Phase 3)
+## 5. Wave 4 — Angular decommission checklist
 
-Only after the React image has served production traffic without a rollback:
+Executed in Phase 4 (`docs/migration/REFACTOR.md`, PR "Phase 4: Idiomatic refactor").
+Deviations: `e2e/__screenshots__/angular` is kept as the historical visual reference;
+`docs/migration/**` stays in place; `AGENTS.md` still contains the migration standards.
 
-- [ ] Delete `src/app/**`, `src/main.ts`, `src/polyfills.ts`, `src/test.ts`, `src/index.html`
+- [x] Delete `src/app/**`, `src/main.ts`, `src/polyfills.ts`, `src/test.ts`, `src/index.html`
       (Angular entry; the React entry is `index.html` at the repo root + `src/main.tsx`),
       `src/environments/**` if unused by React, `src/styles.css`/Angular-only assets.
-- [ ] Delete `angular.json`, `tsconfig.app.json`, `tsconfig.spec.json`, `karma.conf.js`,
+- [x] Delete `angular.json`, `tsconfig.app.json`, `tsconfig.spec.json`, `karma.conf.js`,
       `protractor.conf.js`, `e2e-protractor/**`, `.browserslistrc` (if Angular-only).
-- [ ] `package.json`: remove the `ng`, `ng:start`, `ng:build`, `ng:test`, `ng:test-headless`,
+- [x] `package.json`: remove the `ng`, `ng:start`, `ng:build`, `ng:test`, `ng:test-headless`,
       `ng:lint`, `ng:e2e` scripts and the Angular dependencies (`@angular/*`,
       `@angular-devkit/*`, `@angular-eslint/*`, `@angular/material` + `@angular/cdk`,
       `@angular/material-moment-adapter`, `moment` if unused, `rxjs` if unused, `zone.js`,
       `karma*`, `jasmine*`, `protractor`, `ts-node` (if only used by Protractor),
       `codelyzer`, `tslint`). Run `npm ci && npm run lint && npm run typecheck && npm run test -- --run && npm run build`.
-- [ ] `tsconfig.json`: drop Angular compiler options; fold `tsconfig.react.json` into it.
-- [ ] `eslint.config.mjs`: remove the `e2e-protractor/**` ignore and Angular overrides.
-- [ ] `playwright.config.ts`: remove the `angular` project and `TARGET=angular|both`;
+- [x] `tsconfig.json`: drop Angular compiler options; fold `tsconfig.react.json` into it.
+- [x] `eslint.config.mjs`: remove the `e2e-protractor/**` ignore and Angular overrides.
+- [x] `playwright.config.ts`: remove the `angular` project and `TARGET=angular|both`;
       delete `npm run test:e2e:angular` / `test:e2e:both`, `e2e/__screenshots__/angular`,
       the Angular branches in `e2e/fixtures.ts` (MatSelect / MatDatepicker helpers).
-- [ ] `README.md`: remove the Angular column/sections; `AGENTS.md`: drop "migration" wording.
+- [x] `README.md`: remove the Angular column/sections; `AGENTS.md`: drop "migration" wording.
 - [ ] `Dockerfile`: no change needed (already builds React); delete `petclinic-angular:rollback`
       from the registry after the retention window.
 - [ ] Remove `docs/migration/**` or move to `docs/history/`.

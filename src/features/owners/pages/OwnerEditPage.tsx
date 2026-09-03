@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Owner } from '../../../models';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import OwnerForm from '../components/OwnerForm';
-import type { OwnerFormValues } from '../components/OwnerForm';
-import { useOwnerQuery, useUpdateOwnerMutation } from '../hooks/useOwners';
-import { useBackNavigation } from '../hooks/useBackNavigation';
+import type { Owner } from '@/models';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import OwnerForm from '@/features/owners/components/OwnerForm';
+import type { OwnerFormValues } from '@/features/owners/components/OwnerForm';
+import { useOwnerQuery, useUpdateOwnerMutation } from '@/features/owners/hooks/useOwners';
+import { useBackNavigation } from '@/features/owners/hooks/useBackNavigation';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
 
 /** Port of owner-edit.component (route `owners/:id/edit`). */
 export default function OwnerEditPage() {
@@ -25,7 +27,11 @@ export default function OwnerEditPage() {
       return;
     }
     resetUpdate();
-    const owner: Owner = { ...ownerQuery.data, ...values, id: ownerQuery.data.id ?? Number(id) };
+    const owner: Owner = {
+      ...ownerQuery.data,
+      ...values,
+      id: ownerQuery.data.id ?? Number(id),
+    };
     updateMutation.mutate({ id, owner }, { onSuccess: () => navigate(`/owners/${owner.id}`) });
   };
 
@@ -48,28 +54,26 @@ export default function OwnerEditPage() {
   };
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>Edit Owner</h2>
-        <ErrorAlert message={errorMessage} onDismiss={dismissError} />
-        {ownerQuery.isLoading && <LoadingIndicator label="Loading owner..." />}
-        {ownerQuery.data && (
-          <OwnerForm
-            key={ownerQuery.data.id}
-            owner={ownerQuery.data}
-            submitLabel="Update Owner"
-            isSubmitting={updateMutation.isPending}
-            onSubmit={handleSubmit}
-            onBack={goBack}
-            showFeedbackWhenPristine
-          />
-        )}
-        {!ownerQuery.isLoading && !ownerQuery.data && (
-          <button className="btn btn-default" type="button" onClick={goBack}>
-            Back
-          </button>
-        )}
-      </div>
-    </div>
+    <Page>
+      <h2>Edit Owner</h2>
+      <ErrorAlert message={errorMessage} onDismiss={dismissError} />
+      {ownerQuery.isLoading && <LoadingIndicator label="Loading owner..." />}
+      {ownerQuery.data && (
+        <OwnerForm
+          key={ownerQuery.data.id}
+          owner={ownerQuery.data}
+          submitLabel="Update Owner"
+          isSubmitting={updateMutation.isPending}
+          onSubmit={handleSubmit}
+          onBack={goBack}
+          showFeedbackWhenPristine
+        />
+      )}
+      {!ownerQuery.isLoading && !ownerQuery.data && (
+        <Button type="button" onClick={goBack}>
+          Back
+        </Button>
+      )}
+    </Page>
   );
 }

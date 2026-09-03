@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from 'react-router-dom';
-import type { Specialty, Vet } from '../../../models';
-import { getErrorMessage, getSpecialties, getVetById, queryClient, queryKeys } from '../../../services/api';
+import type { Specialty, Vet } from '@/models';
+import { getErrorMessage, getSpecialties, getVetById, queryClient, queryKeys } from '@/services/api';
 
 export interface VetEditLoaderData {
   vet: Vet | null;

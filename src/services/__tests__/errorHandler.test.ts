@@ -8,8 +8,8 @@ import {
   createHandleError,
   getErrorMessage,
   parseErrorsHeader,
-} from '../errorHandler';
-import { makeErrorsHeader } from '../../mocks/data';
+} from '@/services/errorHandler';
+import { makeErrorsHeader } from '@/mocks/data';
 
 function axiosFailure(status: number, data: unknown, headers: Record<string, string> = {}): AxiosError {
   const config = { headers: new AxiosHeaders() } as InternalAxiosRequestConfig;

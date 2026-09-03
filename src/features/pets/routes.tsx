@@ -1,5 +1,5 @@
 import type { RouteObject } from 'react-router-dom';
-import VisitAddPage from '../visits/pages/VisitAddPage';
+import VisitAddPage from '@/features/visits/pages/VisitAddPage';
 import PetAddPage from './pages/PetAddPage';
 import PetEditPage from './pages/PetEditPage';
 import PetListPage from './pages/PetListPage';

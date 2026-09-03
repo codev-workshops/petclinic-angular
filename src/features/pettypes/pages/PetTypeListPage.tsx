@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { PetType } from '../../../models';
-import { getErrorMessage } from '../../../services/api';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { useDeletePetTypeMutation, usePetTypesQuery } from '../hooks/usePetTypes';
+import type { PetType } from '@/models';
+import { getErrorMessage } from '@/services/api';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { useDeletePetTypeMutation, usePetTypesQuery } from '@/features/pettypes/hooks/usePetTypes';
 import styles from './PetTypeListPage.module.css';
+import Page from '@/components/ui/Page';
+import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
+import Table from '@/components/ui/Table';
 
 /** Port of PettypeListComponent (src/app/pettypes/pettype-list). */
 export default function PetTypeListPage() {
@@ -27,77 +31,63 @@ export default function PetTypeListPage() {
   const isDataReceived = !isLoading;
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>Pet Types</h2>
+    <Page>
+      <h2>Pet Types</h2>
 
-        <ErrorAlert message={errorMessage} onDismiss={() => setDeleteError(null)} />
+      <ErrorAlert message={errorMessage} onDismiss={() => setDeleteError(null)} />
 
-        {isLoading && <LoadingIndicator />}
+      {isLoading && <LoadingIndicator />}
 
-        {!isLoading && (
-          <table id="pettypes" className="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th></th>
-                <th></th>
+      {!isLoading && (
+        <Table id="pettypes" striped>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {(petTypes ?? []).map((petType, index) => (
+              <tr key={petType.id}>
+                <td>
+                  <Input
+                    id={String(index)}
+                    readOnly
+                    type="text"
+                    value={petType.name}
+                    name="pettype_name"
+                    aria-label={`Pet type ${petType.name}`}
+                  />
+                </td>
+                <td>
+                  <Button type="button" onClick={() => navigate(`/pettypes/${petType.id}/edit`)}>
+                    Edit
+                  </Button>
+                  <Button type="button" disabled={deleteMutation.isPending} onClick={() => handleDelete(petType)}>
+                    Delete
+                  </Button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {(petTypes ?? []).map((petType, index) => (
-                <tr key={petType.id}>
-                  <td>
-                    <input
-                      id={String(index)}
-                      readOnly
-                      type="text"
-                      className="form-control"
-                      value={petType.name}
-                      name="pettype_name"
-                      aria-label={`Pet type ${petType.name}`}
-                    />
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-default"
-                      type="button"
-                      onClick={() => navigate(`/pettypes/${petType.id}/edit`)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-default"
-                      type="button"
-                      disabled={deleteMutation.isPending}
-                      onClick={() => handleDelete(petType)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+            ))}
+          </tbody>
+        </Table>
+      )}
 
-        {!isLoading && !loadError && (petTypes ?? []).length === 0 && (
-          <p className={styles.empty}>No pet types found</p>
-        )}
+      {!isLoading && !loadError && (petTypes ?? []).length === 0 && <p className={styles.empty}>No pet types found</p>}
 
-        <div>
-          {isDataReceived && (
-            <button className="btn btn-default" type="button" onClick={() => navigate('/welcome')}>
-              Home
-            </button>
-          )}
-          {isDataReceived && (
-            <button className="btn btn-default" type="button" onClick={() => navigate('/pettypes/add')}>
-              Add
-            </button>
-          )}
-        </div>
+      <div>
+        {isDataReceived && (
+          <Button type="button" onClick={() => navigate('/welcome')}>
+            Home
+          </Button>
+        )}
+        {isDataReceived && (
+          <Button type="button" onClick={() => navigate('/pettypes/add')}>
+            Add
+          </Button>
+        )}
       </div>
-    </div>
+    </Page>
   );
 }

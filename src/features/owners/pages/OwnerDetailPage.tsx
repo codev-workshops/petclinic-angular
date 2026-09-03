@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import ErrorAlert from '../../../components/ErrorAlert';
-import LoadingIndicator from '../../../components/LoadingIndicator';
-import { getErrorMessage } from '../../../services/api';
-import PetCard from '../../pets/components/PetCard';
-import { useDeleteOwnerMutation, useOwnerQuery } from '../hooks/useOwners';
+import ErrorAlert from '@/components/ErrorAlert';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { getErrorMessage } from '@/services/api';
+import PetCard from '@/features/pets/components/PetCard';
+import { useDeleteOwnerMutation, useOwnerQuery } from '@/features/owners/hooks/useOwners';
 import styles from './OwnerDetailPage.module.css';
+import Page from '@/components/ui/Page';
+import Button from '@/components/ui/Button';
+import Table from '@/components/ui/Table';
 
 /**
  * Port of owner-detail.component (route `owners/:id`). The "Delete Owner" button has no
@@ -49,82 +52,68 @@ export default function OwnerDetailPage() {
   };
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>Owner Information</h2>
+    <Page>
+      <h2>Owner Information</h2>
 
-        <ErrorAlert message={errorMessage} onDismiss={dismissError} />
-        {ownerQuery.isLoading && <LoadingIndicator label="Loading owner..." />}
+      <ErrorAlert message={errorMessage} onDismiss={dismissError} />
+      {ownerQuery.isLoading && <LoadingIndicator label="Loading owner..." />}
 
-        {owner && (
-          <>
-            <table className="table table-striped">
-              <tbody>
-                <tr>
-                  <th>Name</th>
-                  <td>
-                    <b className="ownerFullName">
-                      {owner.firstName} {owner.lastName}
-                    </b>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Address</th>
-                  <td>{owner.address}</td>
-                </tr>
-                <tr>
-                  <th>City</th>
-                  <td>{owner.city}</td>
-                </tr>
-                <tr>
-                  <th>Telephone</th>
-                  <td>{owner.telephone}</td>
-                </tr>
-              </tbody>
-            </table>
+      {owner && (
+        <>
+          <Table striped>
+            <tbody>
+              <tr>
+                <th>Name</th>
+                <td>
+                  <b className="ownerFullName">
+                    {owner.firstName} {owner.lastName}
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <th>Address</th>
+                <td>{owner.address}</td>
+              </tr>
+              <tr>
+                <th>City</th>
+                <td>{owner.city}</td>
+              </tr>
+              <tr>
+                <th>Telephone</th>
+                <td>{owner.telephone}</td>
+              </tr>
+            </tbody>
+          </Table>
 
-            <div className={styles.actions}>
-              <button className="btn btn-default" type="button" onClick={() => navigate('/owners')}>
-                Back
-              </button>
-              <button className="btn btn-default" type="button" onClick={() => navigate(`/owners/${owner.id}/edit`)}>
-                Edit Owner
-              </button>
-              <button
-                className="btn btn-default"
-                type="button"
-                onClick={() => navigate(`/owners/${owner.id}/pets/add`)}
-              >
-                Add New Pet
-              </button>
-              <button
-                className="btn btn-default"
-                type="button"
-                disabled={deleteMutation.isPending}
-                onClick={handleDelete}
-              >
-                Delete Owner
-              </button>
-            </div>
+          <div className={styles.actions}>
+            <Button type="button" onClick={() => navigate('/owners')}>
+              Back
+            </Button>
+            <Button type="button" onClick={() => navigate(`/owners/${owner.id}/edit`)}>
+              Edit Owner
+            </Button>
+            <Button type="button" onClick={() => navigate(`/owners/${owner.id}/pets/add`)}>
+              Add New Pet
+            </Button>
+            <Button type="button" disabled={deleteMutation.isPending} onClick={handleDelete}>
+              Delete Owner
+            </Button>
+          </div>
 
-            <br />
-            <br />
-            <br />
-            <h2>Pets and Visits</h2>
+          <h2 className={styles.petsHeading}>Pets and Visits</h2>
 
-            {(owner.pets ?? []).length === 0 && <p className={styles.empty}>No pets found</p>}
-            {(owner.pets ?? []).map((pet) => (
-              <PetCard key={pet.id} pet={pet} />
-            ))}
-          </>
-        )}
+          {(owner.pets ?? []).length === 0 && <p className={styles.empty}>No pets found</p>}
+          {(owner.pets ?? []).map((pet) => (
+            <PetCard key={pet.id} pet={pet} />
+          ))}
+        </>
+      )}
 
-        {!ownerQuery.isLoading && !owner && (
-          <button className="btn btn-default" type="button" onClick={() => navigate('/owners')}>
-            Back
-          </button>
-        )}
-      </div>
-    </div>
+      {!ownerQuery.isLoading && !owner && (
+        <Button type="button" onClick={() => navigate('/owners')}>
+          Back
+        </Button>
+      )}
+    </Page>
   );
 }

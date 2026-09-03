@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import { server } from '../../mocks/server';
-import { apiUrl, networkError } from '../../mocks/handlers';
-import { makePets, makeVisits } from '../../mocks/data';
-import { addVisit, deleteVisit, getVisitById, getVisits, updateVisit } from '../api';
+import { server } from '@/mocks/server';
+import { apiUrl, networkError } from '@/mocks/handlers';
+import { makePets, makeVisits } from '@/mocks/data';
+import { addVisit, deleteVisit, getVisitById, getVisits, updateVisit } from '@/services/api';
 import { expectApiError, silenceConsoleError } from './testUtils';
 
 describe('visits API', () => {

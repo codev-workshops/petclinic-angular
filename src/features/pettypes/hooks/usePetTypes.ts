@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { EntityId, PetType } from '../../../models';
-import { addPetType, deletePetType, getPetTypeById, getPetTypes, queryKeys, updatePetType } from '../../../services/api';
+import type { EntityId, PetType } from '@/models';
+import { addPetType, deletePetType, getPetTypeById, getPetTypes, queryKeys, updatePetType } from '@/services/api';
 
 /** Port of PetTypeService (src/app/pettypes/pettype.service.ts) on top of TanStack Query. */
 
