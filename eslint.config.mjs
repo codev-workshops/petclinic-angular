@@ -1,5 +1,3 @@
-// Flat config for the React/TypeScript app only. The Angular app keeps using
-// .eslintrc.json via `npm run ng:lint`.
 import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -11,16 +9,7 @@ export default tseslint.config(
       'dist/**',
       'node_modules/**',
       'docs/**',
-      'e2e-protractor/**',
       'e2e/__screenshots__/**',
-      'src/app/**',
-      'src/main.ts',
-      'src/polyfills.ts',
-      'src/test.ts',
-      'src/typings.d.ts',
-      'src/environments/**',
-      'karma.conf.js',
-      'protractor.conf.js',
       'playwright-report/**',
       'e2e/.tmp/**',
       'test-results/**',

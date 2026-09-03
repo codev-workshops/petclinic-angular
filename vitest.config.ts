@@ -8,7 +8,7 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
-    exclude: ['node_modules', 'dist', 'src/app/**', 'e2e/**', 'e2e-protractor/**'],
+    exclude: ['node_modules', 'dist', 'e2e/**'],
     css: false,
   },
 });

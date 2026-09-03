@@ -48,7 +48,7 @@ test.describe('owners', () => {
     await ui.snapshot('J01-owner-chain');
   });
 
-  test('J02 owner add', async ({ ui, api, cleanup, page, target }) => {
+  test('J02 owner add', async ({ ui, api, cleanup, page }) => {
     const firstName = uniq('Add');
     const lastName = uniq('Owner');
 
@@ -63,13 +63,9 @@ test.describe('owners', () => {
     await expect(ui.button('Add Owner')).toBeEnabled();
     await ui.button('Add Owner').click();
 
-    // Known deviation: Angular returns to the list, React (AGENTS.md) opens the created owner.
-    if (target === 'angular') {
-      await ui.expectAppPath('/owners');
-    } else {
-      await ui.expectAppPath(/^\/owners\/\d+$/);
-      await expect(page.locator('.ownerFullName')).toHaveText(`${firstName} ${lastName}`);
-    }
+    // Known deviation: Angular returned to the list, React (AGENTS.md) opens the created owner.
+    await ui.expectAppPath(/^\/owners\/\d+$/);
+    await expect(page.locator('.ownerFullName')).toHaveText(`${firstName} ${lastName}`);
 
     await ui.goto('/owners');
     await page.locator('input#lastName').fill(lastName);

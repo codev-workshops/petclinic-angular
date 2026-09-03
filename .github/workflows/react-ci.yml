@@ -3,11 +3,10 @@ name: React CI
 on:
   pull_request:
     branches:
-      - react-migration
       - main
   push:
     branches:
-      - react-migration
+      - main
 
 jobs:
   verify:
@@ -48,10 +47,8 @@ jobs:
           done
           echo "backend did not become ready" >&2
           exit 1
-      - name: Playwright parity suite (React target)
+      - name: Playwright parity suite
         run: npm run test:e2e
-        env:
-          TARGET: react
       - uses: actions/upload-artifact@v4
         if: always()
         with:

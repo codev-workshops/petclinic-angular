@@ -17,7 +17,7 @@ RUN echo "registry = \"$NPM_REGISTRY\"" > /workspace/.npmrc                     
 FROM $DOCKER_HUB/library/nginx:$NGINX_VERSION AS runtime
 
 
-# `npm run build` is the React (Vite) build; it emits dist/ for the /petclinic/ base path.
+# `npm run build` (Vite) emits dist/ for the /petclinic/ base path; nginx serves it on 8080.
 COPY  --from=build /workspace/dist/ /usr/share/nginx/html/petclinic/
 COPY  nginx/default.conf /etc/nginx/conf.d/default.conf
 
