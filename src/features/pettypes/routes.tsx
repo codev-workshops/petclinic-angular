@@ -1,7 +1,15 @@
 import type { RouteObject } from 'react-router-dom';
+import PetTypeListPage from './pages/PetTypeListPage';
+import PetTypeAddPage from './pages/PetTypeAddPage';
+import PetTypeEditPage from './pages/PetTypeEditPage';
 
 /**
- * Routes for the "pettypes" feature. Filled in by the pettypes migration wave;
- * see docs/migration/ROUTES.md for the Angular route table to port.
+ * Mirrors src/app/pettypes/pettypes-routing.module.ts:
+ *   pettypes -> PettypeListComponent, pettypes/add -> PettypeAddComponent,
+ *   pettypes/:id/edit -> PettypeEditComponent
  */
-export const pettypesRoutes: RouteObject[] = [];
+export const pettypesRoutes: RouteObject[] = [
+  { path: 'pettypes', element: <PetTypeListPage /> },
+  { path: 'pettypes/add', element: <PetTypeAddPage /> },
+  { path: 'pettypes/:id/edit', element: <PetTypeEditPage /> },
+];
