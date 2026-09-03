@@ -123,8 +123,8 @@
       }
     },
     "spring-petclinic-angular-e2e": {
-      "root": "e2e",
-      "sourceRoot": "e2e",
+      "root": "e2e-protractor",
+      "sourceRoot": "e2e-protractor",
       "projectType": "application",
       "architect": {
         "e2e": {
