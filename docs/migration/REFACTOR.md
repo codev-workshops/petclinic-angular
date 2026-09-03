@@ -85,6 +85,38 @@ Dependency count after step 4: 8 + 21 = 29 direct (`+zod`).
 same-folder `./` imports stay relative. Enforced by ESLint `no-restricted-imports` with the pattern
 group `../*` for `src/**/*.{ts,tsx}` (CSS `url(../assets/…)` references are unaffected).
 
+## Step 6 — zone.js / moment / core-js verification
+
+```
+npm ls zone.js moment core-js jquery bootstrap tether rxjs   →   └── (empty)
+grep -rniE "zone\.js|moment|core-js|jquery|tether" src e2e package.json vite.config.ts
+```
+Only hit: a comment in `e2e/journeys/pets-visits.spec.ts` explaining the historical Angular date
+format. No code or dependency left. Runtime `dependencies` (8): `@tanstack/react-query`, `axios`,
+`date-fns`, `lucide-react`, `react`, `react-dom`, `react-router-dom`, `zod`.
+
+## Step 7 — Swallow-and-default fallbacks in `src/services/api.ts` (documentation only, no change)
+
+Angular's `HttpErrorHandler.handleError(operation, result)` **swallowed** every HTTP error and
+returned `of(result)`. The React port kept the `fallback` argument on every call for traceability but
+`createHandleError` (`src/services/errorHandler.ts`) **throws** an `ApiError` carrying
+`{ serviceName, operation, status, fallback }`; nothing in `src/` reads `ApiError.fallback`, callers
+surface `getErrorMessage()` in the dismissible alert. The 30 declared fallbacks (candidate product
+decisions — keep throwing, or restore Angular's silent default for some operations?):
+
+| Service | Operation → Angular fallback |
+| --- | --- |
+| Owner | `getOwners → []`, `getOwnerById → {}`, `searchOwners → []`, `addOwner → owner`, `updateOwner → owner`, `deleteOwner → [ownerId]` |
+| Pet | `getPets → []`, `getPetById → {}`, `addPet → pet`, `updatePet → pet`, `deletePet → 0` |
+| Visit | `getVisits → []`, `getVisitById → {}`, `addVisit → visit`, `updateVisit → visit`, `deleteVisit → 0` |
+| Vet | `getVets → []`, `getVetById → {}`, `addVet → vet`, `updateVet → vet`, `deleteVet → 0` |
+| PetType | `getPetTypes → []`, `getPetTypeById → {}`, `addPetType → petType`, `updatePetType → petType`, `deletePetType → 0` |
+| Specialty | `getSpecialties → []`, `getSpecialtyById → {}`, `addSpecialty → specialty`, `updateSpecialty → specialty`, `deleteSpecialty → 0` |
+
+Notable ones: `getXById → {}` would have rendered an empty detail page instead of an error in
+Angular; `add*/update* → input` made a failed save look successful. The parity suite asserts the
+React behaviour (error alert shown), so this PR does not change it.
+
 ## Per-step parity log
 
 | Step | Commit | e2e | lint / typecheck / vitest / build |
@@ -93,4 +125,6 @@ group `../*` for `src/**/*.{ts,tsx}` (CSS `url(../assets/…)` references are un
 | 2 Decommission Angular | `2e13f65` | 22/22 (react) | green (vitest 166) |
 | 3 CSS Modules + tokens + lucide | `1e7c298` | 22/22 (react) | green (vitest 166) |
 | 4 Zod schemas | `56d7ff2` | 22/22 (react) | green (vitest 169) |
-| 5 `@/` alias + ESLint rule | — | 22/22 (react) | green (vitest 169) |
+| 5 `@/` alias + ESLint rule | `d83dc1e` | 22/22 (react) | green (vitest 169) |
+| 6 legacy dep verification | — | (no code change) | — |
+| 7 api.ts fallback inventory | — | (docs only) | — |
