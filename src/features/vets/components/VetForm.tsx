@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import type { Specialty } from '../../../models';
-import VetNameField, { validateName } from './VetNameField';
-import type { VetNameErrors } from './VetNameField';
+import VetNameField from './VetNameField';
 import Button from '../../../components/ui/Button';
 import Field from '../../../components/ui/Field';
 import Form from '../../../components/ui/Form';
 import FormActions from '../../../components/ui/FormActions';
 import Select from '../../../components/ui/Select';
+import { vetSchema } from '../../../forms/schemas';
 
 export interface VetFormValues {
   firstName: string;
@@ -52,13 +52,11 @@ export default function VetForm({
   const [lastNameDirty, setLastNameDirty] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const firstNameErrors = validateName(firstName);
-  const lastNameErrors = validateName(lastName);
-  const isValid = Object.keys(firstNameErrors).length === 0 && Object.keys(lastNameErrors).length === 0;
   const isAdd = variant === 'add';
+  const isValid = vetSchema(variant).safeParse({ firstName, lastName }).success;
 
-  const showRequired = (dirty: boolean, errors: VetNameErrors) =>
-    Boolean(errors.required) && (dirty || (isAdd && submitted));
+  /** vet-add shows "… is required" after a submit attempt even for a pristine field; vet-edit only when dirty. */
+  const showRequired = (dirty: boolean) => dirty || (isAdd && submitted);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -78,7 +76,7 @@ export default function VetForm({
         requiredLabel={isAdd ? 'First name' : 'First Name'}
         value={firstName}
         dirty={firstNameDirty}
-        showRequired={showRequired(firstNameDirty, firstNameErrors)}
+        showRequired={showRequired(firstNameDirty)}
         onChange={(value) => {
           setFirstName(value);
           setFirstNameDirty(true);
@@ -90,7 +88,7 @@ export default function VetForm({
         requiredLabel={isAdd ? 'Last name' : 'Last Name'}
         value={lastName}
         dirty={lastNameDirty}
-        showRequired={showRequired(lastNameDirty, lastNameErrors)}
+        showRequired={showRequired(lastNameDirty)}
         onChange={(value) => {
           setLastName(value);
           setLastNameDirty(true);

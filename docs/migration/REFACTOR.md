@@ -59,10 +59,30 @@ a large utility vocabulary for a tiny surface and re-expressing the theme as con
 
 Dependency count after step 3: 7 + 21 = 28 direct (`-bootstrap`, `+lucide-react`).
 
+## Step 4 — Shared Zod schemas
+
+`zod@3.25.76` added; `src/forms/schemas.ts` is the single validation module. `textField(rules)`
+builds a `z.string().superRefine` that reproduces the Angular validator semantics exactly:
+`minlength` / `maxlength` / `pattern` pass on an empty value (only `required` fires), several rules
+may fail at once, and every failing rule yields its own message in template order. Anchored regexes
+(`/^[a-zA-Z]*$/`, `/^[0-9]*$/`, `/^[A-Za-z0-9].{0,29}$/`, `/^[A-Za-z0-9].{0,79}$/`, `/^[A-Za-z]*$/`),
+lengths and messages were moved verbatim (including "character long", "may be at least",
+"only accept digits" and the vet-add "First name" vs vet-edit "First Name" wording).
+`fieldIssues(schema, value)` returns `{ kind, message }[]` so each form keeps its own dirty /
+touched / submitted gating unchanged (owner-edit colours pristine fields, vet-add and pettype-add
+show `required` after a submit attempt, specialty/pettype edit only when dirty).
+Forms: `OwnerForm`, `PetForm`, `VisitForm`, `VetNameField`/`VetForm`, `PetTypeForm`, `SpecialtyForm`
+now import from `@/forms/schemas` (still relative paths until step 5); the per-form `validate*`
+helpers and error interfaces were deleted. `react-hook-form` was not added: the forms are 1–5
+fields with bespoke gating, and a resolver would have hidden the Angular quirks above.
+
+Dependency count after step 4: 8 + 21 = 29 direct (`+zod`).
+
 ## Per-step parity log
 
 | Step | Commit | e2e | lint / typecheck / vitest / build |
 | ---- | ------ | --- | --------------------------------- |
 | 1 Baseline | `2fe325a` | 44/44 (angular + react) | green |
 | 2 Decommission Angular | `2e13f65` | 22/22 (react) | green (vitest 166) |
-| 3 CSS Modules + tokens + lucide | — | 22/22 (react) | green (vitest 166) |
+| 3 CSS Modules + tokens + lucide | `1e7c298` | 22/22 (react) | green (vitest 166) |
+| 4 Zod schemas | — | 22/22 (react) | green (vitest 169) |

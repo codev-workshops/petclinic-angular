@@ -4,39 +4,7 @@ import Button from '../../../components/ui/Button';
 import Field from '../../../components/ui/Field';
 import Form from '../../../components/ui/Form';
 import Input from '../../../components/ui/Input';
-
-/** Same constraints as the `name` input of pettype-add / pettype-edit templates. */
-export const NAME_MAX_LENGTH = 80;
-export const NAME_PATTERN = /^[A-Za-z0-9].{0,79}$/;
-
-export interface PetTypeFormErrors {
-  required?: boolean;
-  minlength?: boolean;
-  maxlength?: boolean;
-  pattern?: boolean;
-}
-
-/**
- * Mirrors Angular's validator semantics: `minlength`/`pattern` pass on an empty
- * value and only `required` reports it.
- */
-export function validateName(name: string): PetTypeFormErrors {
-  const errors: PetTypeFormErrors = {};
-  if (name.length === 0) {
-    errors.required = true;
-    return errors;
-  }
-  if (name.length < 1) {
-    errors.minlength = true;
-  }
-  if (name.length > NAME_MAX_LENGTH) {
-    errors.maxlength = true;
-  }
-  if (!NAME_PATTERN.test(name)) {
-    errors.pattern = true;
-  }
-  return errors;
-}
+import { fieldIssues, petTypeNameSchema } from '../../../forms/schemas';
 
 interface PetTypeFormProps {
   initialName?: string;
@@ -64,9 +32,9 @@ export default function PetTypeForm({
   const [dirty, setDirty] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const errors = validateName(name);
-  const isValid = Object.keys(errors).length === 0;
-  const showRequired = errors.required && (dirty || (showRequiredOnSubmit && submitted));
+  const issues = fieldIssues(petTypeNameSchema, name);
+  const isValid = issues.length === 0;
+  const showRequired = dirty || (showRequiredOnSubmit && submitted);
   const hasVisibleError = dirty && !isValid;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -78,11 +46,9 @@ export default function PetTypeForm({
     onSubmit(name);
   };
 
-  const messages: string[] = [];
-  if (dirty && errors.maxlength) messages.push('Name may be only 80 characters long');
-  if (dirty && errors.minlength) messages.push('Name may be at least 1 characters long');
-  if (dirty && errors.pattern) messages.push('Name must begin with a letter or digit');
-  if (showRequired) messages.push('Name is required');
+  const messages = issues
+    .filter((issue) => (issue.kind === 'required' ? showRequired : dirty))
+    .map((issue) => issue.message);
 
   return (
     <Form id="pettype" inline onSubmit={handleSubmit}>
@@ -99,7 +65,7 @@ export default function PetTypeForm({
           type="text"
           value={name}
           required
-          aria-invalid={hasVisibleError || showRequired ? true : undefined}
+          aria-invalid={hasVisibleError || (showRequired && !isValid) ? true : undefined}
           aria-describedby="name-errors"
           onChange={(event) => {
             setName(event.target.value);

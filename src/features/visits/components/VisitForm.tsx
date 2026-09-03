@@ -7,35 +7,10 @@ import Field from '../../../components/ui/Field';
 import Form from '../../../components/ui/Form';
 import FormActions from '../../../components/ui/FormActions';
 import Input from '../../../components/ui/Input';
+import { fieldIssues, visitSchema } from '../../../forms/schemas';
+import type { VisitFormValues } from '../../../forms/schemas';
 
-const DESCRIPTION_MIN_LENGTH = 1;
-const DESCRIPTION_MAX_LENGTH = 255;
-
-export interface VisitFormValues {
-  date: string;
-  description: string;
-}
-
-export interface DescriptionErrors {
-  required?: true;
-  minlength?: true;
-  maxlength?: true;
-}
-
-/** Angular's minlength/maxlength validators pass on an empty value; only `required` fires. */
-export function validateDescription(value: string): DescriptionErrors {
-  if (value.length === 0) {
-    return { required: true };
-  }
-  const errors: DescriptionErrors = {};
-  if (value.length < DESCRIPTION_MIN_LENGTH) {
-    errors.minlength = true;
-  }
-  if (value.length > DESCRIPTION_MAX_LENGTH) {
-    errors.maxlength = true;
-  }
-  return errors;
-}
+export type { VisitFormValues } from '../../../forms/schemas';
 
 export function toVisitFormValues(visit: Visit | undefined): VisitFormValues {
   return { date: visit?.date ?? '', description: visit?.description ?? '' };
@@ -54,9 +29,10 @@ export default function VisitForm({ visit, submitLabel, isSubmitting, onSubmit, 
   const [values, setValues] = useState<VisitFormValues>(() => toVisitFormValues(visit));
   const [dirty, setDirty] = useState({ date: false, description: false });
 
-  const descriptionErrors = validateDescription(values.description);
-  const isDescriptionValid = Object.keys(descriptionErrors).length === 0;
-  const isDateValid = values.date !== '';
+  const dateIssues = fieldIssues(visitSchema.shape.date, values.date);
+  const descriptionIssues = fieldIssues(visitSchema.shape.description, values.description);
+  const isDateValid = dateIssues.length === 0;
+  const isDescriptionValid = descriptionIssues.length === 0;
   const isFormValid = isDateValid && isDescriptionValid;
 
   const handleChange = (field: keyof VisitFormValues, value: string) => {
@@ -75,15 +51,6 @@ export default function VisitForm({ visit, submitLabel, isSubmitting, onSubmit, 
   const status = (isDirty: boolean, isValid: boolean): FieldStatus =>
     isDirty ? (isValid ? 'valid' : 'invalid') : null;
 
-  const descriptionMessages: string[] = [];
-  if (dirty.description && descriptionErrors.required) descriptionMessages.push('Description is required');
-  if (dirty.description && descriptionErrors.minlength) {
-    descriptionMessages.push('Description must be at least 1 characters long');
-  }
-  if (dirty.description && descriptionErrors.maxlength) {
-    descriptionMessages.push('Description may be at most 255 characters long');
-  }
-
   return (
     <Form id="visit" onSubmit={handleSubmit}>
       <Field
@@ -91,7 +58,7 @@ export default function VisitForm({ visit, submitLabel, isSubmitting, onSubmit, 
         label="Date"
         status={status(dirty.date, isDateValid)}
         errorsId="date-errors"
-        errors={dirty.date && !isDateValid ? ['Date is required'] : []}
+        errors={dirty.date ? dateIssues.map((issue) => issue.message) : []}
       >
         <Input
           id="date"
@@ -109,7 +76,7 @@ export default function VisitForm({ visit, submitLabel, isSubmitting, onSubmit, 
         label="Description"
         status={status(dirty.description, isDescriptionValid)}
         errorsId="description-errors"
-        errors={descriptionMessages}
+        errors={dirty.description ? descriptionIssues.map((issue) => issue.message) : []}
       >
         <Input
           id="description"

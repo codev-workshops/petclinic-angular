@@ -8,42 +8,10 @@ import Form from '../../../components/ui/Form';
 import FormActions from '../../../components/ui/FormActions';
 import Input from '../../../components/ui/Input';
 import Select from '../../../components/ui/Select';
+import { fieldIssues, petSchema } from '../../../forms/schemas';
+import type { PetFormValues } from '../../../forms/schemas';
 
-/** pet-add/pet-edit templates: `pattern="^[A-Za-z0-9].{0,29}$"`. */
-const PET_NAME_PATTERN = /^[A-Za-z0-9].{0,29}$/;
-const NAME_MIN_LENGTH = 1;
-const NAME_MAX_LENGTH = 30;
-
-export interface PetFormValues {
-  name: string;
-  birthDate: string;
-  typeId: string;
-}
-
-export interface PetNameErrors {
-  required?: true;
-  minlength?: true;
-  maxlength?: true;
-  pattern?: true;
-}
-
-/** Angular's minlength/maxlength/pattern validators pass on an empty value; only `required` fires. */
-export function validatePetName(value: string): PetNameErrors {
-  if (value.length === 0) {
-    return { required: true };
-  }
-  const errors: PetNameErrors = {};
-  if (value.length < NAME_MIN_LENGTH) {
-    errors.minlength = true;
-  }
-  if (value.length > NAME_MAX_LENGTH) {
-    errors.maxlength = true;
-  }
-  if (!PET_NAME_PATTERN.test(value)) {
-    errors.pattern = true;
-  }
-  return errors;
-}
+export type { PetFormValues } from '../../../forms/schemas';
 
 export function toPetFormValues(pet: Pet | undefined): PetFormValues {
   return {
@@ -72,11 +40,13 @@ export default function PetForm({ pet, owner, petTypes, submitLabel, isSubmittin
     typeId: false,
   });
 
-  const nameErrors = validatePetName(values.name);
-  const isNameValid = Object.keys(nameErrors).length === 0;
-  const isBirthDateValid = values.birthDate !== '';
+  const nameIssues = fieldIssues(petSchema.shape.name, values.name);
+  const birthDateIssues = fieldIssues(petSchema.shape.birthDate, values.birthDate);
+  const typeIssues = fieldIssues(petSchema.shape.typeId, values.typeId);
+  const isNameValid = nameIssues.length === 0;
+  const isBirthDateValid = birthDateIssues.length === 0;
   const selectedType = petTypes.find((type) => String(type.id) === values.typeId);
-  const isTypeValid = selectedType !== undefined;
+  const isTypeValid = typeIssues.length === 0 && selectedType !== undefined;
   const isFormValid = isNameValid && isBirthDateValid && isTypeValid;
 
   const handleChange = (field: keyof PetFormValues, value: string) => {
@@ -92,16 +62,13 @@ export default function PetForm({ pet, owner, petTypes, submitLabel, isSubmittin
     onSubmit(values, selectedType);
   };
 
+  const messages = (isDirty: boolean, issues: { message: string }[]) =>
+    isDirty ? issues.map((issue) => issue.message) : [];
+
   const status = (isDirty: boolean, isValid: boolean): FieldStatus =>
     isDirty ? (isValid ? 'valid' : 'invalid') : null;
 
   const ownerName = owner ? `${owner.firstName} ${owner.lastName}` : '';
-
-  const nameMessages: string[] = [];
-  if (dirty.name && nameErrors.required) nameMessages.push('Name is required');
-  if (dirty.name && nameErrors.minlength) nameMessages.push('Name must be at least 1 character long');
-  if (dirty.name && nameErrors.maxlength) nameMessages.push('Name may be at most 30 character long');
-  if (dirty.name && nameErrors.pattern) nameMessages.push('Name must begin with a letter');
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -114,7 +81,7 @@ export default function PetForm({ pet, owner, petTypes, submitLabel, isSubmittin
         label="Name"
         status={status(dirty.name, isNameValid)}
         errorsId="name-errors"
-        errors={nameMessages}
+        errors={messages(dirty.name, nameIssues)}
       >
         <Input
           id="name"
@@ -133,7 +100,7 @@ export default function PetForm({ pet, owner, petTypes, submitLabel, isSubmittin
         label="Birth Date"
         status={status(dirty.birthDate, isBirthDateValid)}
         errorsId="birthDate-errors"
-        errors={dirty.birthDate && !isBirthDateValid ? ['BirthDate is required'] : []}
+        errors={messages(dirty.birthDate, birthDateIssues)}
       >
         <Input
           id="birthDate"
@@ -152,7 +119,7 @@ export default function PetForm({ pet, owner, petTypes, submitLabel, isSubmittin
         label="Type"
         status={status(dirty.typeId, isTypeValid)}
         errorsId="type-errors"
-        errors={dirty.typeId && !isTypeValid ? ['pettype is required'] : []}
+        errors={messages(dirty.typeId, typeIssues)}
       >
         <Select
           id="type"
