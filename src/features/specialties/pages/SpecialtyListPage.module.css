@@ -1,0 +1,11 @@
+.actions .btn + .btn {
+  margin-left: 5px;
+}
+
+.empty {
+  color: #777;
+}
+
+.footerActions .btn + .btn {
+  margin-left: 5px;
+}
