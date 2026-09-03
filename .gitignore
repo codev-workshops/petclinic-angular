@@ -42,3 +42,6 @@ testem.log
 .DS_Store
 Thumbs.db
 *.iml
+
+# Playwright parity suite
+/e2e/.tmp/
