@@ -4,6 +4,7 @@ import { getErrorMessage } from '../../../services/api';
 import ErrorAlert from '../../../components/ErrorAlert';
 import PetTypeForm from '../components/PetTypeForm';
 import { useAddPetTypeMutation } from '../hooks/usePetTypes';
+import Page from '../../../components/ui/Page';
 
 /**
  * Port of PettypeAddComponent (src/app/pettypes/pettype-add). Angular embeds this
@@ -26,17 +27,15 @@ export default function PetTypeAddPage() {
   };
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>New Pet Type</h2>
-        <ErrorAlert message={errorMessage} onDismiss={() => setErrorMessage(null)} />
-        <PetTypeForm
-          submitLabel="Save"
-          isSubmitting={addMutation.isPending}
-          onSubmit={handleSubmit}
-          showRequiredOnSubmit
-        />
-      </div>
-    </div>
+    <Page>
+      <h2>New Pet Type</h2>
+      <ErrorAlert message={errorMessage} onDismiss={() => setErrorMessage(null)} />
+      <PetTypeForm
+        submitLabel="Save"
+        isSubmitting={addMutation.isPending}
+        onSubmit={handleSubmit}
+        showRequiredOnSubmit
+      />
+    </Page>
   );
 }

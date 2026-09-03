@@ -3,7 +3,11 @@ import type { FormEvent } from 'react';
 import type { Specialty } from '../../../models';
 import VetNameField, { validateName } from './VetNameField';
 import type { VetNameErrors } from './VetNameField';
-import styles from './VetForm.module.css';
+import Button from '../../../components/ui/Button';
+import Field from '../../../components/ui/Field';
+import Form from '../../../components/ui/Form';
+import FormActions from '../../../components/ui/FormActions';
+import Select from '../../../components/ui/Select';
 
 export interface VetFormValues {
   firstName: string;
@@ -22,7 +26,11 @@ interface VetFormProps {
   onBack: () => void;
 }
 
-const EMPTY_VALUES: VetFormValues = { firstName: '', lastName: '', specialties: [] };
+const EMPTY_VALUES: VetFormValues = {
+  firstName: '',
+  lastName: '',
+  specialties: [],
+};
 
 /**
  * Shared add/edit form. Specialties are a multi-select (`<mat-select multiple>` in vet-edit;
@@ -63,7 +71,7 @@ export default function VetForm({
   };
 
   return (
-    <form id={isAdd ? 'vet' : 'vet_form'} className="form-horizontal" onSubmit={handleSubmit} noValidate>
+    <Form id={isAdd ? 'vet' : 'vet_form'} onSubmit={handleSubmit}>
       <VetNameField
         id="firstName"
         label="First Name"
@@ -88,42 +96,29 @@ export default function VetForm({
           setLastNameDirty(true);
         }}
       />
-      <div className="control-group">
-        <div className="form-group">
-          <label htmlFor="specialties" className="col-sm-2 control-label">
-            {isAdd ? 'Type' : 'Specialties'}
-          </label>
-          <div className="col-sm-10">
-            <select
-              id="specialties"
-              name="specialties"
-              className={`form-control ${styles.multiSelect}`}
-              multiple
-              value={selectedIds.map(String)}
-              onChange={(event) =>
-                setSelectedIds(Array.from(event.target.selectedOptions, (option) => Number(option.value)))
-              }
-            >
-              {specialties.map((spec) => (
-                <option key={spec.id} value={spec.id}>
-                  {spec.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </div>
-      <div className="form-group">
-        <div className="col-sm-offset-2 col-sm-10">
-          <br />
-          <button className="btn btn-default" type="button" onClick={onBack}>
-            &lt; Back
-          </button>
-          <button className="btn btn-default" type="submit" disabled={!isValid || isSubmitting}>
-            Save Vet
-          </button>
-        </div>
-      </div>
-    </form>
+      <Field id="specialties" label={isAdd ? 'Type' : 'Specialties'}>
+        <Select
+          id="specialties"
+          name="specialties"
+          multiple
+          value={selectedIds.map(String)}
+          onChange={(event) =>
+            setSelectedIds(Array.from(event.target.selectedOptions, (option) => Number(option.value)))
+          }
+        >
+          {specialties.map((spec) => (
+            <option key={spec.id} value={spec.id}>
+              {spec.name}
+            </option>
+          ))}
+        </Select>
+      </Field>
+      <FormActions>
+        <Button onClick={onBack}>&lt; Back</Button>
+        <Button type="submit" disabled={!isValid || isSubmitting}>
+          Save Vet
+        </Button>
+      </FormActions>
+    </Form>
   );
 }

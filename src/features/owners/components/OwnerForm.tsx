@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import type { Owner } from '../../../models';
-import styles from './OwnerForm.module.css';
+import Button from '../../../components/ui/Button';
+import Field from '../../../components/ui/Field';
+import Form from '../../../components/ui/Form';
+import FormActions from '../../../components/ui/FormActions';
+import Input from '../../../components/ui/Input';
 
 /** Constraints transcribed from owner-add / owner-edit templates. */
 const LETTERS_ONLY = /^[a-zA-Z]*$/;
@@ -179,67 +183,47 @@ export default function OwnerForm({
   };
 
   return (
-    <form className="form-horizontal" onSubmit={handleSubmit} noValidate>
+    <Form onSubmit={handleSubmit}>
       {FIELD_ORDER.map((field) => {
         const rules = FIELD_RULES[field];
         const fieldErrors = errors[field];
         const isValid = Object.keys(fieldErrors).length === 0;
         const isDirty = dirty[field];
         const showFeedback = isDirty || showFeedbackWhenPristine;
-        const groupClass = [
-          'form-group',
-          'has-feedback',
-          showFeedback && isValid ? 'has-success' : '',
-          showFeedback && !isValid ? 'has-error' : '',
-        ]
-          .filter(Boolean)
-          .join(' ');
         const errorsId = `${field}-errors`;
+        const messages: string[] = [];
+        if (isDirty && fieldErrors.required) messages.push(rules.messages.required);
+        if (isDirty && fieldErrors.minlength && rules.messages.minlength) messages.push(rules.messages.minlength);
+        if (isDirty && fieldErrors.maxlength) messages.push(rules.messages.maxlength);
+        if (isDirty && fieldErrors.pattern && rules.messages.pattern) messages.push(rules.messages.pattern);
         return (
-          <div key={field} className={groupClass}>
-            <label htmlFor={field} className="col-sm-2 control-label">
-              {rules.label}
-            </label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id={field}
-                name={field}
-                value={values[field]}
-                required
-                aria-invalid={isDirty && !isValid ? true : undefined}
-                aria-describedby={errorsId}
-                onChange={(event) => handleChange(field, event.target.value)}
-              />
-              <span
-                className={`glyphicon form-control-feedback ${isValid ? 'glyphicon-ok' : 'glyphicon-remove'}`}
-                aria-hidden="true"
-              ></span>
-              <div id={errorsId} className={styles.errors}>
-                {isDirty && fieldErrors.required && <span className="help-block">{rules.messages.required}</span>}
-                {isDirty && fieldErrors.minlength && rules.messages.minlength && (
-                  <span className="help-block">{rules.messages.minlength}</span>
-                )}
-                {isDirty && fieldErrors.maxlength && <span className="help-block">{rules.messages.maxlength}</span>}
-                {isDirty && fieldErrors.pattern && rules.messages.pattern && (
-                  <span className="help-block">{rules.messages.pattern}</span>
-                )}
-              </div>
-            </div>
-          </div>
+          <Field
+            key={field}
+            id={field}
+            label={rules.label}
+            status={showFeedback ? (isValid ? 'valid' : 'invalid') : null}
+            errorsId={errorsId}
+            errors={messages}
+          >
+            <Input
+              type="text"
+              id={field}
+              name={field}
+              value={values[field]}
+              required
+              aria-invalid={isDirty && !isValid ? true : undefined}
+              aria-describedby={errorsId}
+              onChange={(event) => handleChange(field, event.target.value)}
+            />
+          </Field>
         );
       })}
-      <div className="form-group">
-        <div className="col-sm-offset-2 col-sm-10">
-          <button className="btn btn-default" type="button" onClick={onBack}>
-            Back
-          </button>
-          <button className="btn btn-default" type="submit" disabled={!isFormValid || isSubmitting}>
-            {submitLabel}
-          </button>
-        </div>
-      </div>
-    </form>
+      <FormActions>
+        <Button onClick={onBack}>Back</Button>
+        <Button type="submit" disabled={!isFormValid || isSubmitting}>
+          {submitLabel}
+        </Button>
+      </FormActions>
+    </Form>
   );
 }

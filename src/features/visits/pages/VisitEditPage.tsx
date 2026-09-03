@@ -11,6 +11,8 @@ import VisitForm from '../components/VisitForm';
 import type { VisitFormValues } from '../components/VisitForm';
 import VisitPetSummary from '../components/VisitPetSummary';
 import { useUpdateVisitMutation, useVisitQuery } from '../hooks/useVisits';
+import Page from '../../../components/ui/Page';
+import Button from '../../../components/ui/Button';
 
 /** Port of visit-edit.component (route `visits/:id/edit`). */
 export default function VisitEditPage() {
@@ -76,30 +78,28 @@ export default function VisitEditPage() {
     (pet !== undefined && ownerQuery.isLoading);
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>Edit Visit</h2>
-        <ErrorAlert message={errorMessage} onDismiss={dismissError} />
-        {isLoading && <LoadingIndicator label="Loading visit..." />}
-        {!isLoading && visit && (
-          <>
-            <VisitPetSummary pet={pet} owner={owner} />
-            <VisitForm
-              key={visit.id}
-              visit={visit}
-              submitLabel="Update Visit"
-              isSubmitting={updateMutation.isPending}
-              onSubmit={handleSubmit}
-              onBack={goBack}
-            />
-          </>
-        )}
-        {!isLoading && !visit && (
-          <button className="btn btn-default" type="button" onClick={goBack}>
-            Back
-          </button>
-        )}
-      </div>
-    </div>
+    <Page>
+      <h2>Edit Visit</h2>
+      <ErrorAlert message={errorMessage} onDismiss={dismissError} />
+      {isLoading && <LoadingIndicator label="Loading visit..." />}
+      {!isLoading && visit && (
+        <>
+          <VisitPetSummary pet={pet} owner={owner} />
+          <VisitForm
+            key={visit.id}
+            visit={visit}
+            submitLabel="Update Visit"
+            isSubmitting={updateMutation.isPending}
+            onSubmit={handleSubmit}
+            onBack={goBack}
+          />
+        </>
+      )}
+      {!isLoading && !visit && (
+        <Button type="button" onClick={goBack}>
+          Back
+        </Button>
+      )}
+    </Page>
   );
 }

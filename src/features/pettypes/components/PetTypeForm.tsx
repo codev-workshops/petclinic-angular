@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import styles from './PetTypeForm.module.css';
+import Button from '../../../components/ui/Button';
+import Field from '../../../components/ui/Field';
+import Form from '../../../components/ui/Form';
+import Input from '../../../components/ui/Input';
 
 /** Same constraints as the `name` input of pettype-add / pettype-edit templates. */
 export const NAME_MAX_LENGTH = 80;
@@ -75,53 +78,39 @@ export default function PetTypeForm({
     onSubmit(name);
   };
 
-  const groupClass = ['form-group', 'has-feedback', dirty && isValid ? 'has-success' : '', hasVisibleError ? 'has-error' : '']
-    .filter(Boolean)
-    .join(' ');
+  const messages: string[] = [];
+  if (dirty && errors.maxlength) messages.push('Name may be only 80 characters long');
+  if (dirty && errors.minlength) messages.push('Name may be at least 1 characters long');
+  if (dirty && errors.pattern) messages.push('Name must begin with a letter or digit');
+  if (showRequired) messages.push('Name is required');
 
   return (
-    <form id="pettype" className="form-horizontal" onSubmit={handleSubmit} noValidate>
-      <div className={groupClass}>
-        <div className="form-group">
-          <label htmlFor="name" className="col-sm-1 control-label">
-            Name
-          </label>
-          <div className="col-sm-6">
-            <input
-              id="name"
-              name="name"
-              className="form-control"
-              type="text"
-              value={name}
-              required
-              aria-invalid={hasVisibleError || showRequired ? true : undefined}
-              aria-describedby="name-errors"
-              onChange={(event) => {
-                setName(event.target.value);
-                setDirty(true);
-              }}
-            />
-            <span
-              className={`glyphicon form-control-feedback ${isValid ? 'glyphicon-ok' : 'glyphicon-remove'}`}
-              aria-hidden="true"
-            ></span>
-            <div id="name-errors" className={styles.errors}>
-              {dirty && errors.maxlength && <span className="help-block">Name may be only 80 characters long</span>}
-              {dirty && errors.minlength && <span className="help-block">Name may be at least 1 characters long</span>}
-              {dirty && errors.pattern && <span className="help-block">Name must begin with a letter or digit</span>}
-              {showRequired && <span className="help-block">Name is required</span>}
-            </div>
-          </div>
-          <button className="btn btn-default" type="submit" disabled={!isValid || isSubmitting}>
-            {submitLabel}
-          </button>
-          {onCancel && (
-            <button className="btn btn-default" type="button" onClick={onCancel}>
-              Cancel
-            </button>
-          )}
-        </div>
-      </div>
-    </form>
+    <Form id="pettype" inline onSubmit={handleSubmit}>
+      <Field
+        id="name"
+        label="Name"
+        status={dirty ? (isValid ? 'valid' : 'invalid') : null}
+        errorsId="name-errors"
+        errors={messages}
+      >
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          value={name}
+          required
+          aria-invalid={hasVisibleError || showRequired ? true : undefined}
+          aria-describedby="name-errors"
+          onChange={(event) => {
+            setName(event.target.value);
+            setDirty(true);
+          }}
+        />
+      </Field>
+      <Button type="submit" disabled={!isValid || isSubmitting}>
+        {submitLabel}
+      </Button>
+      {onCancel && <Button onClick={onCancel}>Cancel</Button>}
+    </Form>
   );
 }

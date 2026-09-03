@@ -1,15 +1,16 @@
-import './LoadingIndicator.css';
+import { LoaderCircle } from 'lucide-react';
+import { cx } from '../utils/cx';
+import styles from './LoadingIndicator.module.css';
 
 interface LoadingIndicatorProps {
   label?: string;
 }
 
-/** Shown while the first request of a view is in flight. */
 export default function LoadingIndicator({ label = 'Loading...' }: LoadingIndicatorProps) {
   return (
-    <div className="loading-indicator" role="status" aria-live="polite">
-      <span className="glyphicon glyphicon-refresh loading-indicator-spin" aria-hidden="true"></span>
-      <span> {label}</span>
+    <div className={cx(styles.indicator, 'loading-indicator')} role="status" aria-live="polite">
+      <LoaderCircle className={styles.spin} size={18} aria-hidden="true" />
+      <span>{label}</span>
     </div>
   );
 }

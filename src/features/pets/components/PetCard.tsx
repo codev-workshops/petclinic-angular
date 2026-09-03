@@ -5,7 +5,10 @@ import ErrorAlert from '../../../components/ErrorAlert';
 import { getErrorMessage } from '../../../services/api';
 import VisitTable from '../../visits/components/VisitTable';
 import { useDeletePetMutation } from '../hooks/usePets';
+import { cx } from '../../../utils/cx';
 import styles from './PetCard.module.css';
+import Button from '../../../components/ui/Button';
+import Table from '../../../components/ui/Table';
 
 interface PetCardProps {
   pet: Pet;
@@ -28,12 +31,15 @@ export default function PetCard({ pet }: PetCardProps) {
   };
 
   return (
-    <table className="table table-striped" data-testid={`pet-${pet.id}`}>
+    <Table striped data-testid={`pet-${pet.id}`}>
       <tbody>
         <tr>
           <td className={styles.top}>
-            <ErrorAlert message={deleteMutation.error ? getErrorMessage(deleteMutation.error) : null} onDismiss={reset} />
-            <dl className="dl-horizontal">
+            <ErrorAlert
+              message={deleteMutation.error ? getErrorMessage(deleteMutation.error) : null}
+              onDismiss={reset}
+            />
+            <dl className={cx(styles.details, 'dl-horizontal')}>
               <dt>Name</dt>
               <dd>{pet.name}</dd>
               <dt>Birth Date</dt>
@@ -41,24 +47,15 @@ export default function PetCard({ pet }: PetCardProps) {
               <dt>Type</dt>
               <dd>{pet.type?.name}</dd>
               <div className={styles.actions}>
-                <button className="btn btn-default" type="button" onClick={() => navigate(`/pets/${pet.id}/edit`)}>
+                <Button type="button" onClick={() => navigate(`/pets/${pet.id}/edit`)}>
                   Edit Pet
-                </button>
-                <button
-                  className="btn btn-default"
-                  type="button"
-                  disabled={deleteMutation.isPending}
-                  onClick={handleDelete}
-                >
+                </Button>
+                <Button type="button" disabled={deleteMutation.isPending} onClick={handleDelete}>
                   Delete Pet
-                </button>
-                <button
-                  className="btn btn-default"
-                  type="button"
-                  onClick={() => navigate(`/pets/${pet.id}/visits/add`)}
-                >
+                </Button>
+                <Button type="button" onClick={() => navigate(`/pets/${pet.id}/visits/add`)}>
                   Add Visit
-                </button>
+                </Button>
               </div>
             </dl>
           </td>
@@ -67,6 +64,6 @@ export default function PetCard({ pet }: PetCardProps) {
           </td>
         </tr>
       </tbody>
-    </table>
+    </Table>
   );
 }

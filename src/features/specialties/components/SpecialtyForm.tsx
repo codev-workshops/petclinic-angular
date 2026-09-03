@@ -1,7 +1,10 @@
 import { useId, useState } from 'react';
 import type { FormEvent } from 'react';
 import type { Specialty } from '../../../models';
-import styles from './SpecialtyForm.module.css';
+import Button from '../../../components/ui/Button';
+import Field from '../../../components/ui/Field';
+import Form from '../../../components/ui/Form';
+import Input from '../../../components/ui/Input';
 
 /** Same rule as `pattern="^[A-Za-z0-9].{0,79}$"` in the Angular templates. */
 const NAME_PATTERN = /^[A-Za-z0-9].{0,79}$/;
@@ -52,7 +55,13 @@ interface SpecialtyFormProps {
  * Shared add/edit form (specialty-add.component.html / specialty-edit.component.html).
  * The initial value is read once; remount (e.g. with `key`) to reset it for another specialty.
  */
-export default function SpecialtyForm({ specialty, submitLabel, isSubmitting, onSubmit, onCancel }: SpecialtyFormProps) {
+export default function SpecialtyForm({
+  specialty,
+  submitLabel,
+  isSubmitting,
+  onSubmit,
+  onCancel,
+}: SpecialtyFormProps) {
   const [name, setName] = useState(specialty?.name ?? '');
   const [nameDirty, setNameDirty] = useState(false);
   const nameId = useId();
@@ -70,57 +79,34 @@ export default function SpecialtyForm({ specialty, submitLabel, isSubmitting, on
     onSubmit({ id: specialty?.id as number, name });
   };
 
-  const groupClass = ['form-group', 'has-feedback', nameDirty && (isValid ? 'has-success' : 'has-error')]
-    .filter(Boolean)
-    .join(' ');
-
   return (
-    <form className={`form-horizontal ${styles.form}`} onSubmit={handleSubmit} noValidate>
-      <div className={groupClass}>
-        <label className="col-sm-1 control-label" htmlFor={nameId}>
-          Name
-        </label>
-        <div className="col-sm-6">
-          <input
-            id={nameId}
-            name="name"
-            className="form-control"
-            type="text"
-            maxLength={NAME_MAX_LENGTH}
-            required
-            value={name}
-            aria-invalid={showNameErrors}
-            aria-describedby={showNameErrors ? nameErrorId : undefined}
-            onChange={(event) => {
-              setName(event.target.value);
-              setNameDirty(true);
-            }}
-          />
-          {nameDirty && (
-            <span
-              className={`glyphicon form-control-feedback ${isValid ? 'glyphicon-ok' : 'glyphicon-remove'}`}
-              aria-hidden="true"
-            ></span>
-          )}
-          {showNameErrors && (
-            <div id={nameErrorId}>
-              {nameErrors.map((error) => (
-                <span key={error} className="help-block">
-                  {NAME_MESSAGES[error]}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-        <button className="btn btn-default" type="submit" disabled={!isValid || isSubmitting}>
-          {submitLabel}
-        </button>
-        {onCancel && (
-          <button className="btn btn-default" type="button" onClick={onCancel}>
-            Cancel
-          </button>
-        )}
-      </div>
-    </form>
+    <Form inline onSubmit={handleSubmit}>
+      <Field
+        id={nameId}
+        label="Name"
+        status={nameDirty ? (isValid ? 'valid' : 'invalid') : null}
+        errorsId={showNameErrors ? nameErrorId : undefined}
+        errors={showNameErrors ? nameErrors.map((error) => NAME_MESSAGES[error]) : []}
+      >
+        <Input
+          id={nameId}
+          name="name"
+          type="text"
+          maxLength={NAME_MAX_LENGTH}
+          required
+          value={name}
+          aria-invalid={showNameErrors}
+          aria-describedby={showNameErrors ? nameErrorId : undefined}
+          onChange={(event) => {
+            setName(event.target.value);
+            setNameDirty(true);
+          }}
+        />
+      </Field>
+      <Button type="submit" disabled={!isValid || isSubmitting}>
+        {submitLabel}
+      </Button>
+      {onCancel && <Button onClick={onCancel}>Cancel</Button>}
+    </Form>
   );
 }

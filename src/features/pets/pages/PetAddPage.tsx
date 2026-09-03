@@ -9,6 +9,8 @@ import { useOwnerQuery } from '../../owners/hooks/useOwners';
 import PetForm from '../components/PetForm';
 import type { PetFormValues } from '../components/PetForm';
 import { useAddPetMutation, usePetTypesQuery } from '../hooks/usePets';
+import Page from '../../../components/ui/Page';
+import Button from '../../../components/ui/Button';
 
 /**
  * Port of pet-add.component. Routed as `owners/:id/pets/add` (the Angular URL) and `pets/add`;
@@ -42,7 +44,9 @@ export default function PetAddPage() {
       ownerId: owner.id,
       visits: [],
     } as Pet;
-    addMutation.mutate(pet, { onSuccess: () => navigate(`/owners/${owner.id}`) });
+    addMutation.mutate(pet, {
+      onSuccess: () => navigate(`/owners/${owner.id}`),
+    });
   };
 
   const errorMessage =
@@ -69,27 +73,25 @@ export default function PetAddPage() {
   const isLoading = ownerQuery.isLoading || petTypesQuery.isLoading;
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>Add Pet</h2>
-        <ErrorAlert message={errorMessage} onDismiss={dismissError} />
-        {isLoading && <LoadingIndicator label="Loading owner..." />}
-        {!isLoading && owner && (
-          <PetForm
-            owner={owner}
-            petTypes={petTypesQuery.data ?? []}
-            submitLabel="Save Pet"
-            isSubmitting={addMutation.isPending}
-            onSubmit={handleSubmit}
-            onBack={goBack}
-          />
-        )}
-        {!isLoading && !owner && (
-          <button className="btn btn-default" type="button" onClick={goBack}>
-            &lt; Back
-          </button>
-        )}
-      </div>
-    </div>
+    <Page>
+      <h2>Add Pet</h2>
+      <ErrorAlert message={errorMessage} onDismiss={dismissError} />
+      {isLoading && <LoadingIndicator label="Loading owner..." />}
+      {!isLoading && owner && (
+        <PetForm
+          owner={owner}
+          petTypes={petTypesQuery.data ?? []}
+          submitLabel="Save Pet"
+          isSubmitting={addMutation.isPending}
+          onSubmit={handleSubmit}
+          onBack={goBack}
+        />
+      )}
+      {!isLoading && !owner && (
+        <Button type="button" onClick={goBack}>
+          &lt; Back
+        </Button>
+      )}
+    </Page>
   );
 }

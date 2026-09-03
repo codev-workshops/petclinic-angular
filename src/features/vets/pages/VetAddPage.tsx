@@ -6,6 +6,7 @@ import LoadingIndicator from '../../../components/LoadingIndicator';
 import VetForm from '../components/VetForm';
 import type { VetFormValues } from '../components/VetForm';
 import { useAddVetMutation, useSpecialtiesQuery } from '../hooks/useVets';
+import Page from '../../../components/ui/Page';
 
 /** Port of VetAddComponent (src/app/vets/vet-add). */
 export default function VetAddPage() {
@@ -29,21 +30,19 @@ export default function VetAddPage() {
   const errorMessage = saveError ?? (loadError ? getErrorMessage(loadError) : null);
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>New Veterinarian</h2>
-        <ErrorAlert message={errorMessage} onDismiss={() => setSaveError(null)} />
-        {isLoading && <LoadingIndicator />}
-        {!isLoading && (
-          <VetForm
-            variant="add"
-            specialties={specialties ?? []}
-            isSubmitting={addMutation.isPending}
-            onSubmit={handleSubmit}
-            onBack={gotoVetList}
-          />
-        )}
-      </div>
-    </div>
+    <Page>
+      <h2>New Veterinarian</h2>
+      <ErrorAlert message={errorMessage} onDismiss={() => setSaveError(null)} />
+      {isLoading && <LoadingIndicator />}
+      {!isLoading && (
+        <VetForm
+          variant="add"
+          specialties={specialties ?? []}
+          isSubmitting={addMutation.isPending}
+          onSubmit={handleSubmit}
+          onBack={gotoVetList}
+        />
+      )}
+    </Page>
   );
 }

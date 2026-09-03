@@ -1,4 +1,5 @@
-import styles from './VetNameField.module.css';
+import Field from '../../../components/ui/Field';
+import Input from '../../../components/ui/Input';
 
 /** Same constraints as the firstName / lastName inputs of vet-add / vet-edit templates. */
 export const NAME_MIN_LENGTH = 1;
@@ -45,54 +46,43 @@ export interface VetNameFieldProps {
   onChange: (value: string) => void;
 }
 
-export default function VetNameField({ id, label, requiredLabel, value, dirty, showRequired, onChange }: VetNameFieldProps) {
+export default function VetNameField({
+  id,
+  label,
+  requiredLabel,
+  value,
+  dirty,
+  showRequired,
+  onChange,
+}: VetNameFieldProps) {
   const errors = validateName(value);
   const isValid = Object.keys(errors).length === 0;
   const hasVisibleError = dirty && !isValid;
-  const groupClass = [
-    'form-group',
-    'has-feedback',
-    dirty && isValid ? 'has-success' : '',
-    hasVisibleError ? 'has-error' : '',
-  ]
-    .filter(Boolean)
-    .join(' ');
+
+  const messages: string[] = [];
+  if (dirty && errors.maxlength) messages.push(`${label} may be only ${NAME_MAX_LENGTH} characters long`);
+  if (dirty && errors.minlength) messages.push(`${label} must be at least ${NAME_MIN_LENGTH} characters long`);
+  if (dirty && errors.pattern) messages.push(`${label} may only consist of letters`);
+  if (showRequired) messages.push(`${requiredLabel} is required`);
 
   return (
-    <div className={groupClass}>
-      <label htmlFor={id} className="col-sm-2 control-label">
-        {label}
-      </label>
-      <div className="col-sm-10">
-        <input
-          type="text"
-          className="form-control"
-          id={id}
-          name={id}
-          value={value}
-          required
-          aria-invalid={hasVisibleError || showRequired ? true : undefined}
-          aria-describedby={`${id}-errors`}
-          onChange={(event) => onChange(event.target.value)}
-        />
-        <span
-          className={`glyphicon form-control-feedback ${isValid ? 'glyphicon-ok' : 'glyphicon-remove'}`}
-          aria-hidden="true"
-        ></span>
-        <div id={`${id}-errors`} className={styles.errors}>
-          {dirty && errors.maxlength && (
-            <span className="help-block">{label} may be only {NAME_MAX_LENGTH} characters long</span>
-          )}
-          {dirty && errors.minlength && (
-            <span className="help-block">
-              {label} must be at least {NAME_MIN_LENGTH} characters long
-            </span>
-          )}
-          {dirty && errors.pattern && <span className="help-block">{label} may only consist of letters</span>}
-          {showRequired && <span className="help-block">{requiredLabel} is required</span>}
-        </div>
-      </div>
-    </div>
+    <Field
+      id={id}
+      label={label}
+      status={dirty ? (isValid ? 'valid' : 'invalid') : null}
+      errorsId={`${id}-errors`}
+      errors={messages}
+    >
+      <Input
+        type="text"
+        id={id}
+        name={id}
+        value={value}
+        required
+        aria-invalid={hasVisibleError || showRequired ? true : undefined}
+        aria-describedby={`${id}-errors`}
+        onChange={(event) => onChange(event.target.value)}
+      />
+    </Field>
   );
 }
-

@@ -7,6 +7,10 @@ import { getErrorMessage } from '../../../services/api';
 import { useDeleteSpecialty, useSpecialtiesQuery } from '../hooks/useSpecialties';
 import SpecialtyAdd from '../components/SpecialtyAdd';
 import styles from './SpecialtyListPage.module.css';
+import Page from '../../../components/ui/Page';
+import Input from '../../../components/ui/Input';
+import Button from '../../../components/ui/Button';
+import Table from '../../../components/ui/Table';
 
 /** Port of specialty-list.component (route `specialties`). */
 export default function SpecialtyListPage() {
@@ -48,72 +52,60 @@ export default function SpecialtyListPage() {
   };
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>Specialties</h2>
-        <ErrorAlert message={errorMessage} onDismiss={dismissError} />
-        {isLoading && <LoadingIndicator label="Loading specialties..." />}
-        <table id="specialties" className="table table-striped">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th></th>
-              <th></th>
+    <Page>
+      <h2>Specialties</h2>
+      <ErrorAlert message={errorMessage} onDismiss={dismissError} />
+      {isLoading && <LoadingIndicator label="Loading specialties..." />}
+      <Table id="specialties" striped>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {specialties.map((specialty, index) => (
+            <tr key={specialty.id}>
+              <td>
+                <Input
+                  id={`spec_name_${index}`}
+                  name="spec_name"
+                  type="text"
+                  readOnly
+                  value={specialty.name}
+                  aria-label={`Specialty name ${specialty.name}`}
+                />
+              </td>
+              <td className={styles.actions}>
+                <Button type="button" onClick={() => navigate(`/specialties/${specialty.id}/edit`)}>
+                  Edit
+                </Button>
+                <Button type="button" disabled={deleteMutation.isPending} onClick={() => handleDelete(specialty)}>
+                  Delete
+                </Button>
+              </td>
+              <td></td>
             </tr>
-          </thead>
-          <tbody>
-            {specialties.map((specialty, index) => (
-              <tr key={specialty.id}>
-                <td>
-                  <input
-                    id={`spec_name_${index}`}
-                    name="spec_name"
-                    type="text"
-                    className="form-control"
-                    readOnly
-                    value={specialty.name}
-                    aria-label={`Specialty name ${specialty.name}`}
-                  />
-                </td>
-                <td className={styles.actions}>
-                  <button
-                    className="btn btn-default"
-                    type="button"
-                    onClick={() => navigate(`/specialties/${specialty.id}/edit`)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-default"
-                    type="button"
-                    disabled={deleteMutation.isPending}
-                    onClick={() => handleDelete(specialty)}
-                  >
-                    Delete
-                  </button>
-                </td>
-                <td></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {!isLoading && !specialtiesQuery.error && specialties.length === 0 && (
-          <p className={styles.empty}>No specialties found</p>
+          ))}
+        </tbody>
+      </Table>
+      {!isLoading && !specialtiesQuery.error && specialties.length === 0 && (
+        <p className={styles.empty}>No specialties found</p>
+      )}
+      {isInsert && <SpecialtyAdd onAdded={handleAdded} />}
+      <div className={styles.footerActions}>
+        {isDataReceived && (
+          <Button type="button" onClick={() => navigate('/welcome')}>
+            Home
+          </Button>
         )}
-        {isInsert && <SpecialtyAdd onAdded={handleAdded} />}
-        <div className={styles.footerActions}>
-          {isDataReceived && (
-            <button className="btn btn-default" type="button" onClick={() => navigate('/welcome')}>
-              Home
-            </button>
-          )}
-          {isDataReceived && (
-            <button className="btn btn-default" type="button" onClick={() => setIsInsert((value) => !value)}>
-              Add
-            </button>
-          )}
-        </div>
+        {isDataReceived && (
+          <Button type="button" onClick={() => setIsInsert((value) => !value)}>
+            Add
+          </Button>
+        )}
       </div>
-    </div>
+    </Page>
   );
 }

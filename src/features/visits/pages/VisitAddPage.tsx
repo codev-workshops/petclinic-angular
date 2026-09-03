@@ -12,6 +12,9 @@ import type { VisitFormValues } from '../components/VisitForm';
 import VisitPetSummary from '../components/VisitPetSummary';
 import VisitTable from '../components/VisitTable';
 import { useAddVisitMutation } from '../hooks/useVisits';
+import styles from './VisitAddPage.module.css';
+import Page from '../../../components/ui/Page';
+import Button from '../../../components/ui/Button';
 
 /**
  * Port of visit-add.component. Routed as `pets/:id/visits/add` (the Angular URL) and `visits/add`;
@@ -42,7 +45,9 @@ export default function VisitAddPage() {
       description: values.description,
       pet: { ...pet, owner: owner ?? pet.owner },
     } as Visit;
-    addMutation.mutate(visit, { onSuccess: () => navigate(`/owners/${pet.ownerId}`) });
+    addMutation.mutate(visit, {
+      onSuccess: () => navigate(`/owners/${pet.ownerId}`),
+    });
   };
 
   const errorMessage =
@@ -69,42 +74,30 @@ export default function VisitAddPage() {
   const isLoading = petQuery.isLoading || (pet !== undefined && ownerQuery.isLoading);
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>New Visit</h2>
-        <ErrorAlert message={errorMessage} onDismiss={dismissError} />
-        {isLoading && <LoadingIndicator label="Loading pet..." />}
-        {!isLoading && pet && (
-          <>
-            <VisitPetSummary pet={pet} owner={owner} />
-            <VisitForm
-              submitLabel="Add Visit"
-              isSubmitting={addMutation.isPending}
-              onSubmit={handleSubmit}
-              onBack={goBack}
-            />
-            <br />
-            <div className="col-12 text-left">
-              <p>
-                <b>Previous Visits</b>
-              </p>
-            </div>
-            <br />
-            <div className="container">
-              <div className="row">
-                <div className="col-12 text-center">
-                  <VisitTable visits={pet.visits ?? []} />
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-        {!isLoading && !pet && (
-          <button className="btn btn-default" type="button" onClick={goBack}>
-            Back
-          </button>
-        )}
-      </div>
-    </div>
+    <Page>
+      <h2>New Visit</h2>
+      <ErrorAlert message={errorMessage} onDismiss={dismissError} />
+      {isLoading && <LoadingIndicator label="Loading pet..." />}
+      {!isLoading && pet && (
+        <>
+          <VisitPetSummary pet={pet} owner={owner} />
+          <VisitForm
+            submitLabel="Add Visit"
+            isSubmitting={addMutation.isPending}
+            onSubmit={handleSubmit}
+            onBack={goBack}
+          />
+          <section className={styles.previousVisits}>
+            <h3>Previous Visits</h3>
+            <VisitTable visits={pet.visits ?? []} />
+          </section>
+        </>
+      )}
+      {!isLoading && !pet && (
+        <Button type="button" onClick={goBack}>
+          Back
+        </Button>
+      )}
+    </Page>
   );
 }

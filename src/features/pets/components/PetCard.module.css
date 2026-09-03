@@ -8,3 +8,27 @@
   gap: 5px;
   margin-top: 10px;
 }
+
+.details {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  column-gap: var(--space-5);
+  row-gap: var(--space-1);
+  margin: 0;
+}
+
+.details dt {
+  text-align: right;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.details dd {
+  margin: 0;
+}
+
+.details .actions {
+  grid-column: 1 / -1;
+}

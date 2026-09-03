@@ -1,0 +1,130 @@
+.navbar {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-height: 70px;
+  padding: 0 var(--space-4);
+  border-top: 4px solid var(--color-brand);
+  background-color: var(--color-ink);
+  color: var(--color-text-inverse);
+}
+
+.brand {
+  display: inline-block;
+  align-self: center;
+  width: 229px;
+  height: 46px;
+  margin: 12px var(--space-4) 6px 0;
+  background: url('../assets/images/spring-logo-dataflow.png') -1px -1px no-repeat;
+  text-decoration: none;
+}
+
+.brandHover {
+  display: block;
+  width: 229px;
+  height: 46px;
+  background: url('../assets/images/spring-logo-dataflow.png') -1px -48px no-repeat;
+  opacity: 0;
+  transition: opacity 0.12s ease-in-out;
+}
+
+.brand:hover .brandHover {
+  opacity: 1;
+}
+
+.nav {
+  display: flex;
+  align-items: stretch;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  position: relative;
+  display: flex;
+}
+
+.link,
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-5);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-base);
+  text-transform: uppercase;
+  color: var(--color-text-inverse);
+  background: none;
+  border: 0;
+  text-decoration: none;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.link:hover,
+.link:focus-visible,
+.toggle:hover,
+.toggle:focus-visible,
+.open > .toggle,
+.link.active {
+  color: #eee;
+  background-color: var(--color-brand);
+  text-decoration: none;
+  outline: none;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  text-align: left;
+  background-color: var(--color-surface);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-menu);
+}
+
+.open > .menu {
+  display: block;
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 3px 20px;
+  line-height: var(--line-height-base);
+  color: #333;
+  white-space: nowrap;
+}
+
+.menuLink:hover,
+.menuLink:focus-visible {
+  color: #262626;
+  background-color: #f5f5f5;
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+  }
+
+  .link,
+  .toggle {
+    padding: var(--space-3) var(--space-4);
+  }
+}

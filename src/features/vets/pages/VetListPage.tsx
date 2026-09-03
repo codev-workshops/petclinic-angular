@@ -6,6 +6,9 @@ import ErrorAlert from '../../../components/ErrorAlert';
 import LoadingIndicator from '../../../components/LoadingIndicator';
 import { useDeleteVetMutation, useVetsQuery } from '../hooks/useVets';
 import styles from './VetListPage.module.css';
+import Page from '../../../components/ui/Page';
+import Button from '../../../components/ui/Button';
+import Table from '../../../components/ui/Table';
 
 /** Port of VetListComponent (src/app/vets/vet-list). */
 export default function VetListPage() {
@@ -27,69 +30,62 @@ export default function VetListPage() {
   const isVetDataReceived = !isLoading;
 
   return (
-    <div className="container-fluid">
-      <div className="container xd-container">
-        <h2>Veterinarians</h2>
+    <Page>
+      <h2>Veterinarians</h2>
 
-        <ErrorAlert message={errorMessage} onDismiss={() => setDeleteError(null)} />
+      <ErrorAlert message={errorMessage} onDismiss={() => setDeleteError(null)} />
 
-        {isLoading && <LoadingIndicator />}
+      {isLoading && <LoadingIndicator />}
 
-        {!isLoading && (
-          <table id="vets" className="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Specialties</th>
-                <th></th>
-                <th></th>
+      {!isLoading && (
+        <Table id="vets" striped>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Specialties</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {(vets ?? []).map((vet) => (
+              <tr key={vet.id}>
+                <td>
+                  {vet.firstName} {vet.lastName}
+                </td>
+                <td>
+                  {vet.specialties.map((spec) => (
+                    <div key={spec.id}>{spec.name}</div>
+                  ))}
+                </td>
+                <td>
+                  <Button type="button" onClick={() => navigate(`/vets/${vet.id}/edit`)}>
+                    Edit Vet
+                  </Button>
+                  <Button type="button" disabled={deleteMutation.isPending} onClick={() => handleDelete(vet)}>
+                    Delete Vet
+                  </Button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {(vets ?? []).map((vet) => (
-                <tr key={vet.id}>
-                  <td>
-                    {vet.firstName} {vet.lastName}
-                  </td>
-                  <td>
-                    {vet.specialties.map((spec) => (
-                      <div key={spec.id}>{spec.name}</div>
-                    ))}
-                  </td>
-                  <td>
-                    <button className="btn btn-default" type="button" onClick={() => navigate(`/vets/${vet.id}/edit`)}>
-                      Edit Vet
-                    </button>
-                    <button
-                      className="btn btn-default"
-                      type="button"
-                      disabled={deleteMutation.isPending}
-                      onClick={() => handleDelete(vet)}
-                    >
-                      Delete Vet
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            ))}
+          </tbody>
+        </Table>
+      )}
+
+      {!isLoading && !loadError && (vets ?? []).length === 0 && <p className={styles.empty}>No veterinarians found</p>}
+
+      <div>
+        {isVetDataReceived && (
+          <Button type="button" onClick={() => navigate('/welcome')}>
+            Home
+          </Button>
         )}
-
-        {!isLoading && !loadError && (vets ?? []).length === 0 && <p className={styles.empty}>No veterinarians found</p>}
-
-        <div>
-          {isVetDataReceived && (
-            <button className="btn btn-default" type="button" onClick={() => navigate('/welcome')}>
-              Home
-            </button>
-          )}
-          {isVetDataReceived && (
-            <button className="btn btn-default" type="button" onClick={() => navigate('/vets/add')}>
-              Add Vet
-            </button>
-          )}
-        </div>
+        {isVetDataReceived && (
+          <Button type="button" onClick={() => navigate('/vets/add')}>
+            Add Vet
+          </Button>
+        )}
       </div>
-    </div>
+    </Page>
   );
 }

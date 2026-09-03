@@ -5,6 +5,8 @@ import ErrorAlert from '../../../components/ErrorAlert';
 import { getErrorMessage } from '../../../services/api';
 import { useDeleteVisitMutation } from '../hooks/useVisits';
 import styles from './VisitTable.module.css';
+import Button from '../../../components/ui/Button';
+import Table from '../../../components/ui/Table';
 
 interface VisitTableProps {
   visits: Visit[];
@@ -31,7 +33,7 @@ export default function VisitTable({ visits }: VisitTableProps) {
     <>
       <ErrorAlert message={deleteMutation.error ? getErrorMessage(deleteMutation.error) : null} onDismiss={reset} />
       {visits.length > 0 && (
-        <table className="table table-condensed">
+        <Table condensed>
           <thead>
             <tr>
               <th>Visit Date</th>
@@ -45,22 +47,17 @@ export default function VisitTable({ visits }: VisitTableProps) {
                 <td>{visit.date}</td>
                 <td>{visit.description}</td>
                 <td className={styles.actions}>
-                  <button className="btn btn-default" type="button" onClick={() => navigate(`/visits/${visit.id}/edit`)}>
+                  <Button type="button" onClick={() => navigate(`/visits/${visit.id}/edit`)}>
                     Edit Visit
-                  </button>
-                  <button
-                    className="btn btn-default"
-                    type="button"
-                    disabled={deleteMutation.isPending}
-                    onClick={() => handleDelete(visit)}
-                  >
+                  </Button>
+                  <Button type="button" disabled={deleteMutation.isPending} onClick={() => handleDelete(visit)}>
                     Delete Visit
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
     </>
   );

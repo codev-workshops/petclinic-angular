@@ -1,0 +1,149 @@
+/* Global base: fonts, reset and element defaults. Everything else is a CSS Module. */
+@import './tokens.css';
+
+@font-face {
+  font-family: 'varela_roundregular';
+  src:
+    url('../assets/fonts/varela_round-webfont.woff') format('woff'),
+    url('../assets/fonts/varela_round-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'montserratregular';
+  src:
+    url('../assets/fonts/montserrat-webfont.woff') format('woff'),
+    url('../assets/fonts/montserrat-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  font-weight: 400;
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  line-height: 30px;
+  margin-bottom: var(--space-4);
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  margin: 0 0 10px;
+}
+
+b,
+strong {
+  font-weight: 700;
+}
+
+strong {
+  font-family: var(--font-heading);
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
+img {
+  vertical-align: middle;
+  border: 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px dotted var(--color-ink);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+button[disabled],
+input[disabled] {
+  cursor: default;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
