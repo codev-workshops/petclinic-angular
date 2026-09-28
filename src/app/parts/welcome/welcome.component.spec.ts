@@ -16,8 +16,6 @@
  *
  */
 
-/* tslint:disable:no-unused-variable */
-
 
 /**
  * @author Vitaliy Fedoriv
