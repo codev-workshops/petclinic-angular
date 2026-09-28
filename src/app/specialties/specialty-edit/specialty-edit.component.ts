@@ -40,18 +40,18 @@ export class SpecialtyEditComponent implements OnInit {
 
   ngOnInit() {
     const specId = this.route.snapshot.params.id;
-    this.specialtyService.getSpecialtyById(specId).subscribe(
-      specialty => this.specialty = specialty,
-      error => this.errorMessage = error as any);
+    this.specialtyService.getSpecialtyById(specId).subscribe({
+      next: specialty => this.specialty = specialty,
+      error: error => this.errorMessage = error as any});
   }
 
   onSubmit(specialty: Specialty) {
-    this.specialtyService.updateSpecialty(specialty.id.toString(), specialty).subscribe(
-      res => {
+    this.specialtyService.updateSpecialty(specialty.id.toString(), specialty).subscribe({
+      next: res => {
         console.log('update success');
         this.onBack();
       },
-      error => this.errorMessage = error as any);
+      error: error => this.errorMessage = error as any});
  }
 
   onBack() {

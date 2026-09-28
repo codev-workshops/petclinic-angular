@@ -76,14 +76,14 @@ describe('OwnerService', () => {
   it('should return expected owners (called once)', () => {
     ownerService
       .getOwners()
-      .subscribe(
-        (owners) =>
+      .subscribe({
+        next: (owners) =>
           expect(owners).toEqual(
             expectedOwners,
             'should return expected owners'
           ),
-        fail
-      );
+        error: fail
+      });
 
     // OwnerService should have made one request to GET owners from expected URL
     const req = httpTestingController.expectOne(ownerService.entityUrl);
@@ -119,10 +119,10 @@ describe('OwnerService', () => {
 
     ownerService
       .addOwner(owner)
-      .subscribe(
-        (data) => expect(data).toEqual(owner, 'should return new owner'),
-        fail
-      );
+      .subscribe({
+        next: (data) => expect(data).toEqual(owner, 'should return new owner'),
+        error: fail
+      });
 
     const req = httpTestingController.expectOne(ownerService.entityUrl);
     expect(req.request.method).toEqual('POST');
@@ -150,7 +150,7 @@ describe('OwnerService', () => {
 
     ownerService
       .updateOwner(owner.id.toString(), owner)
-      .subscribe((data) => expect(data).toEqual(owner, 'updated owner'), fail);
+      .subscribe({next: (data) => expect(data).toEqual(owner, 'updated owner'), error: fail});
 
     const req = httpTestingController.expectOne(ownerService.entityUrl + '/'+owner.id);
     expect(req.request.method).toEqual('PUT');

@@ -62,7 +62,7 @@ export class HttpErrorHandler {
       console.error(error);
       console.error(`${serviceName}::${operation} failed: ${message}`);
 
-      return throwError(message);
+      return throwError(() => new Error(message));
     };
 
   }

@@ -58,8 +58,8 @@ export class VisitEditComponent implements OnInit {
 
   ngOnInit() {
     const visitId = this.route.snapshot.params.id;
-    this.visitService.getVisitById(visitId).subscribe(
-      visit => {
+    this.visitService.getVisitById(visitId).subscribe({
+      next: visit => {
         this.visit = visit;
         this.petService.getPetById(visit.petId).subscribe(
           pet => {
@@ -73,7 +73,7 @@ export class VisitEditComponent implements OnInit {
           }
         )
       },
-      error => this.errorMessage = error as any);
+      error: error => this.errorMessage = error as any});
   }
 
   onSubmit(visit: Visit) {
@@ -82,9 +82,9 @@ export class VisitEditComponent implements OnInit {
     // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
     visit.date = moment(visit.date).format('YYYY-MM-DD');
 
-    this.visitService.updateVisit(visit.id.toString(), visit).subscribe(
-      res => this.gotoOwnerDetail(),
-      error => this.errorMessage = error as any);
+    this.visitService.updateVisit(visit.id.toString(), visit).subscribe({
+      next: res => this.gotoOwnerDetail(),
+      error: error => this.errorMessage = error as any});
 
   }
 

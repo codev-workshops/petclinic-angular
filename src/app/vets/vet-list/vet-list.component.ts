@@ -24,7 +24,7 @@ import {Component, OnInit} from '@angular/core';
 import {Vet} from '../vet';
 import {VetService} from '../vet.service';
 import {Router} from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-vet-list',
@@ -46,18 +46,18 @@ export class VetListComponent implements OnInit {
       finalize(() => {
         this.isVetDataReceived = true;
       })
-    ).subscribe(
-      vets => this.vets = vets,
-      error => this.errorMessage = error as any);
+    ).subscribe({
+      next: vets => this.vets = vets,
+      error: error => this.errorMessage = error as any});
   }
 
   deleteVet(vet: Vet) {
-    this.vetService.deleteVet(vet.id.toString()).subscribe(
-      response => {
+    this.vetService.deleteVet(vet.id.toString()).subscribe({
+      next: response => {
         this.responseStatus = response;
         this.vets = this.vets.filter(currentItem => !(currentItem.id === vet.id));
       },
-      error => this.errorMessage = error as any);
+      error: error => this.errorMessage = error as any});
   }
 
   gotoHome() {

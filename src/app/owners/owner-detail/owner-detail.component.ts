@@ -41,9 +41,9 @@ export class OwnerDetailComponent implements OnInit {
 
   ngOnInit() {
     const ownerId = this.route.snapshot.params.id;
-    this.ownerService.getOwnerById(ownerId).subscribe(
-      owner => this.owner = owner,
-      error => this.errorMessage = error as any);
+    this.ownerService.getOwnerById(ownerId).subscribe({
+      next: owner => this.owner = owner,
+      error: error => this.errorMessage = error as any});
   }
 
   gotoOwnersList() {

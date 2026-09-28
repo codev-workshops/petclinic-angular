@@ -40,18 +40,18 @@ export class PettypeEditComponent implements OnInit {
 
   ngOnInit() {
     const pettypeId = this.route.snapshot.params.id;
-    this.pettypeService.getPetTypeById(pettypeId).subscribe(
-      pettype => this.pettype = pettype,
-      error => this.errorMessage = error as any);
+    this.pettypeService.getPetTypeById(pettypeId).subscribe({
+      next: pettype => this.pettype = pettype,
+      error: error => this.errorMessage = error as any});
   }
 
   onSubmit(pettype: PetType) {
-    this.pettypeService.updatePetType(pettype.id.toString(), pettype).subscribe(
-      res => {
+    this.pettypeService.updatePetType(pettype.id.toString(), pettype).subscribe({
+      next: res => {
         console.log('update success');
         this.onBack();
       },
-      error => this.errorMessage = error as any);
+      error: error => this.errorMessage = error as any});
 
   }
 

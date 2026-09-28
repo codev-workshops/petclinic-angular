@@ -44,13 +44,13 @@ export class OwnerAddComponent implements OnInit {
 
   onSubmit(owner: Owner) {
     owner.id = null;
-    this.ownerService.addOwner(owner).subscribe(
-      newOwner => {
+    this.ownerService.addOwner(owner).subscribe({
+      next: newOwner => {
         this.owner = newOwner;
         this.gotoOwnersList();
       },
-      error => this.errorMessage = error as any
-    );
+      error: error => this.errorMessage = error as any
+    });
   }
 
   gotoOwnersList() {

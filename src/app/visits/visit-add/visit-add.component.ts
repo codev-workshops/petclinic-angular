@@ -61,8 +61,8 @@ export class VisitAddComponent implements OnInit {
   ngOnInit() {
     console.log(this.route.parent);
     const petId = this.route.snapshot.params.id;
-    this.petService.getPetById(petId).subscribe(
-      pet => {
+    this.petService.getPetById(petId).subscribe({
+      next: pet => {
         this.currentPet = pet;
         this.visit.pet = this.currentPet;
         this.currentPetType = this.currentPet.type;
@@ -72,7 +72,7 @@ export class VisitAddComponent implements OnInit {
           }
         )
       },
-      error => this.errorMessage = error as any);
+      error: error => this.errorMessage = error as any});
   }
 
   onSubmit(visit: Visit) {
@@ -82,14 +82,14 @@ export class VisitAddComponent implements OnInit {
     // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
     visit.date = moment(visit.date).format('YYYY-MM-DD');
 
-    this.visitService.addVisit(visit).subscribe(
-      newVisit => {
+    this.visitService.addVisit(visit).subscribe({
+      next: newVisit => {
         this.visit = newVisit;
         this.addedSuccess = true;
         that.gotoOwnerDetail();
       },
-      error => this.errorMessage = error as any
-    );
+      error: error => this.errorMessage = error as any
+    });
   }
 
   gotoOwnerDetail() {

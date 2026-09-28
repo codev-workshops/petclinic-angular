@@ -24,7 +24,7 @@ import {Component, OnInit} from '@angular/core';
 import {Specialty} from '../specialty';
 import {SpecialtyService} from '../specialty.service';
 import {Router} from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-specialty-list',
@@ -47,18 +47,18 @@ export class SpecialtyListComponent implements OnInit {
       finalize(() => {
         this.isSpecialitiesDataReceived = true;
       })
-    ).subscribe(
-      specialties => this.specialties = specialties,
-      error => this.errorMessage = error as any);
+    ).subscribe({
+      next: specialties => this.specialties = specialties,
+      error: error => this.errorMessage = error as any});
   }
 
   deleteSpecialty(specialty: Specialty) {
-    this.specService.deleteSpecialty(specialty.id.toString()).subscribe(
-      response => {
+    this.specService.deleteSpecialty(specialty.id.toString()).subscribe({
+      next: response => {
         this.responseStatus = response;
         this.specialties = this.specialties.filter(currentItem => !(currentItem.id === specialty.id));
       },
-      error => this.errorMessage = error as any);
+      error: error => this.errorMessage = error as any});
   }
 
   onNewSpecialty(newSpecialty: Specialty) {

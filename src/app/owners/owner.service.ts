@@ -25,7 +25,7 @@ import { Owner } from './owner';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs';
 import { HandleError, HttpErrorHandler } from '../error.service';
 
 @Injectable()
