@@ -23,8 +23,8 @@
  */
 
 import {
-  HttpClientTestingModule,
   HttpTestingController,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
 // Other imports
 import { TestBed } from '@angular/core/testing';
@@ -32,6 +32,7 @@ import {
   HttpClient,
   HttpErrorResponse,
   HttpResponse,
+  provideHttpClient,
 } from '@angular/common/http';
 
 import { HttpErrorHandler } from '../error.service';
@@ -48,8 +49,12 @@ describe('OwnerService', () => {
   let httpClientSpy: { get: jasmine.Spy };
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [OwnerService, HttpErrorHandler],
+      providers: [
+        OwnerService,
+        HttpErrorHandler,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     });
 
     httpTestingController = TestBed.inject(HttpTestingController);
