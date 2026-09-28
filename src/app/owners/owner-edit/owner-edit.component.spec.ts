@@ -23,10 +23,8 @@
  */
 
 import {
-  async,
   ComponentFixture,
   TestBed,
-  waitForAsync,
 } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OwnerEditComponent } from './owner-edit.component';
@@ -51,8 +49,8 @@ describe('OwnerEditComponent', () => {
   let fixture: ComponentFixture<OwnerEditComponent>;
   let router: Router;
   beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
+    async () => {
+      await TestBed.configureTestingModule({
         declarations: [OwnerEditComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         // schemas: [ NO_ERRORS_SCHEMA ],
@@ -65,7 +63,7 @@ describe('OwnerEditComponent', () => {
           { provide: ActivatedRoute, useClass: ActivatedRouteStub },
         ],
       }).compileComponents();
-    })
+    }
   );
 
   beforeEach(() => {
@@ -89,12 +87,12 @@ describe('OwnerEditComponent', () => {
   });
 
  
-  it('update owner', async(() => {
+  it('update owner', () => {
     let buttons = fixture.debugElement.queryAll(By.css('button'));
     let updateOwnerButton = buttons[1].nativeElement;
     spyOn(component, 'onSubmit');
     updateOwnerButton.click();
     expect(component.onSubmit).toHaveBeenCalled();
-  }));
+  });
 
 });

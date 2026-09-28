@@ -22,19 +22,21 @@
  * @author Vitaliy Fedoriv
  */
 
-import { inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import {SpecialtyService} from './specialty.service';
-import {HttpClient, provideHttpClient} from '@angular/common/http';
-import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient} from '@angular/common/http';
+import {HttpErrorHandler} from '../error.service';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 
 describe('SpecialtyService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SpecialtyService, provideHttpClient(), provideHttpClientTesting()]
+      providers: [SpecialtyService, HttpErrorHandler, provideHttpClient(), provideHttpClientTesting()]
     });
   });
 
-  it('should ...', waitForAsync(inject([HttpTestingController], (specialtyService: SpecialtyService, http: HttpClient) => {
+  it('should ...', () => {
+    const specialtyService = TestBed.inject(SpecialtyService);
     expect(specialtyService).toBeTruthy();
-  })));
+  });
 });

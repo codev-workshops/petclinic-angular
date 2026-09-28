@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { PetListComponent } from './pet-list.component';
@@ -48,8 +48,8 @@ describe('PetListComponent', () => {
   let spy: Spy;
 
   beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
+    async () => {
+      await TestBed.configureTestingModule({
         declarations: [PetListComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         imports: [FormsModule],
@@ -59,7 +59,7 @@ describe('PetListComponent', () => {
           { provide: ActivatedRoute, useClass: ActivatedRouteStub },
         ],
       }).compileComponents();
-    })
+    }
   );
 
   beforeEach(() => {

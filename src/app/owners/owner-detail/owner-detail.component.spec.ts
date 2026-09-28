@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ENGINE_METHOD_PKEY_ASN1_METHS } from 'constants';
@@ -49,8 +49,8 @@ describe('OwnerDetailComponent', () => {
   let el: HTMLElement;
   let router: Router;
   beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
+    async () => {
+      await TestBed.configureTestingModule({
         declarations: [OwnerDetailComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         imports: [FormsModule, RouterTestingModule],
@@ -60,11 +60,11 @@ describe('OwnerDetailComponent', () => {
           { provide: ActivatedRoute, useClass: ActivatedRouteStub },
         ],
       }).compileComponents();
-    })
+    }
   );
   beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
+    async () => {
+      await TestBed.configureTestingModule({
         declarations: [OwnerDetailComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         imports: [FormsModule, RouterTestingModule],
@@ -74,7 +74,7 @@ describe('OwnerDetailComponent', () => {
           { provide: ActivatedRoute, useClass: ActivatedRouteStub },
         ],
       }).compileComponents();
-    })
+    }
   );
 
   const owner: Owner = {

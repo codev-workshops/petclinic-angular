@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VisitAddComponent} from './visit-add.component';
@@ -61,8 +61,8 @@ describe('VisitAddComponent', () => {
   let testPet: Pet;
   let spy: Spy;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [VisitAddComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
@@ -75,7 +75,7 @@ describe('VisitAddComponent', () => {
       ]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(VisitAddComponent);

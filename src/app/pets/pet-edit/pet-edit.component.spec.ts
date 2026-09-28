@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {PetEditComponent} from './pet-edit.component';
@@ -65,8 +65,8 @@ describe('PetEditComponent', () => {
   let testPet: Pet;
   let spy: Spy;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [PetEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
@@ -79,7 +79,7 @@ describe('PetEditComponent', () => {
       ]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PetEditComponent);

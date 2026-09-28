@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {PetAddComponent} from './pet-add.component';
@@ -65,8 +65,8 @@ describe('PetAddComponent', () => {
   let testPet: Pet;
   let spy: Spy;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [PetAddComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
@@ -79,7 +79,7 @@ describe('PetAddComponent', () => {
       ]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PetAddComponent);
